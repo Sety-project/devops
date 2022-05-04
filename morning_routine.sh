@@ -35,24 +35,41 @@ prune_ecr(){
 }
 
 prune_local(){
-	echo todo
+	echo local prunning in progress...
+	docker system prune -af >> $logs_location 2>&1
 }
 
 pyrun() {
-	docker_login
-	PYTHON_PROJECT=`pwd | sed 's#.*/##'`
-	if [ $# -ne 0 ]
-	then
-	PYTHON_PROJECT=$1
-	shift
+	docker_login 
+	FOUND=0
+	if [[ $# -ne 0 ]] ; then
+		# Tries to identify the project name
+		for repo in $REPO_LIST; do
+			if [ $repo == $1 ]; then
+				FOUND=1
+				PYTHON_PROJECT=$1
+				shift
+			fi
+		done
 	fi
-	IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`
-	if [[ $IS_DOCKER_RUNNING -eq 0 ]] ; then 
-	sudo /bin/systemctl start docker.service
+	if [[ $FOUND -eq 0 ]] ; then
+		# Project not found, assigning
+		PYTHON_PROJECT=`pwd | sed 's#.*/##'`	
+		# If project not in repo list, terminating
+		echo $REPO_LIST | grep -w -q $PYTHON_PROJECT
+		if [[ $? == 1 ]]; then
+			return
+		fi
 	fi
-	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	
-	echo voici mes params : "${@}"
+	IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`
+
+	if [[ $IS_DOCKER_RUNNING -eq 0 ]] ; then 
+		sudo /bin/systemctl start docker.service
+	fi
+
+	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+
 	docker run -it "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest 
 }
 
