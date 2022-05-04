@@ -2,15 +2,14 @@
 
 logs_location="/tmp/morning_log_$(date +%Y_%m_%d_%T).txt"
 
-export PYTHON_REGISTRY="848832660957.dkr.ecr.eu-west-2.amazonaws.com"
-# export PYTHON_REGISTRY="683664628229.dkr.ecr.eu-west-1.amazonaws.com"
+export PYTHON_REGISTRY="878533356457.dkr.ecr.eu-west-2.amazonaws.com"     # Sety AWS
 export ECR_REGION=eu-west-2
-export REPOSITORY_NAME=helloworld
+export REPO_LIST=$(aws ecr describe-repositories --region $ECR_REGION --query "repositories[].repositoryName" --output text)
 
 # export PYTHON_BUILD_IMAGE="${PYTHON_REGISTRY}/pybuild:latest"
 
 aws_login (){
-	aws ecr get-login-password --region $ECR_REGION
+	aws ecr get-login-password --region $ECR_REGION --profile default
 }
 
 docker_login (){
@@ -18,11 +17,12 @@ docker_login (){
 }
 
 docker_pull (){
-	docker pull $PYTHON_REGISTRY/$REPOSITORY_NAME:latest
+	for repo in $REPO_LIST; do
+		docker pull $PYTHON_REGISTRY/$repo:latest
+	done
 }
 
 prune_ecr(){
-	REPO_LIST=$(aws ecr describe-repositories --region $ECR_REGION --query "repositories[].repositoryName" --output text);
 	for repo in $REPO_LIST; do
 		#echo "list untagged images for $repo"
 		IMAGES_TO_DELETE=$(aws ecr list-images --region $ECR_REGION --repository-name $repo --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json)
@@ -31,9 +31,6 @@ prune_ecr(){
 			aws ecr batch-delete-image --region $ECR_REGION --repository-name $repo --image-ids "$IMAGES_TO_DELETE" || true
 		fi
 	done
-
-	#IMAGES_TO_DELETE=$( aws ecr list-images --region $ECR_REGION --repository-name $REPOSITORY_NAME --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json )
-	#aws ecr batch-delete-image --region $ECR_REGION --repository-name $REPOSITORY_NAME --image-ids "$IMAGES_TO_DELETE" || true
 }
 
 prune_local(){
