@@ -17,6 +17,7 @@ docker_login (){
 }
 
 docker_pull (){
+	docker_login
 	for repo in $REPO_LIST; do
 		docker pull $PYTHON_REGISTRY/$repo:latest
 	done
@@ -43,13 +44,14 @@ pyrun() {
 	if [ $# -ne 0 ]
 	then
 	PYTHON_PROJECT=$1
+	shift
 	fi
 	IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`
 	if [[ $IS_DOCKER_RUNNING -eq 0 ]] ; then 
 	sudo /bin/systemctl start docker.service
 	fi
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
-	shift
+	
 	echo voici mes params : "${@}"
 	docker run -it "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest 
 }
