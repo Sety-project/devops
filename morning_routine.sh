@@ -39,6 +39,7 @@ prune_local(){
 	docker system prune -af >> $logs_location 2>&1
 }
 
+
 pyrun() {
 	docker_login 
 	FOUND=0
@@ -71,6 +72,10 @@ pyrun() {
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 
 	docker run -it "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest 
+}
+
+prodbox(){
+	ssh -i ~/Downloads/ec2-one.pem ec2-user@ec2-3-8-151-236.eu-west-2.compute.amazonaws.com -p 22
 }
 
 echo "Good morning!" >>  $logs_location
