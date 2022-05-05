@@ -39,6 +39,9 @@ prune_local(){
 	docker system prune -af >> $logs_location 2>&1
 }
 
+pybuild(){
+ 	echo "todo"
+}
 
 pyrun() {
 	docker_login 
@@ -72,6 +75,10 @@ pyrun() {
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 
 	docker run -it "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest 
+}
+
+cache_static(){
+	pyrun staticdata -v ~/Static:/home/ec2-user/Static
 }
 
 prodbox(){
