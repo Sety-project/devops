@@ -35,10 +35,6 @@ prune_local(){
 	docker system prune -af >> $logs_location 2>&1
 }
 
-cache_static(){
-	pyrun staticdata -v ~/Static:/home/ec2-user/Static
-}
-
 prodbox(){
 	ssh -i ~/.cache/setykeys/ec2-one.pem ec2-user@ec2-3-8-151-236.eu-west-2.compute.amazonaws.com -p 22
 }

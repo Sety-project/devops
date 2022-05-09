@@ -45,3 +45,8 @@ pyrun() {
 	fi
 }
 
+# For calls on the EC2 instance
+pyrun_static(){
+	pyrun staticdata -v ~/Static:/home/ec2-user/Static
+}
+
