@@ -1,12 +1,8 @@
 #!/bin/bash
 
+source ~/sety/devops/buildtools/bin/bash_functions.sh
+
 logs_location="/tmp/morning_log_$(date +%Y_%m_%d_%T).txt"
-
-export PYTHON_REGISTRY="878533356457.dkr.ecr.eu-west-2.amazonaws.com"     # Sety AWS
-export ECR_REGION=eu-west-2
-export REPO_LIST=$(aws ecr describe-repositories --region $ECR_REGION --query "repositories[].repositoryName" --output text)
-
-# export PYTHON_BUILD_IMAGE="${PYTHON_REGISTRY}/pybuild:latest"
 
 aws_login (){
 	aws ecr get-login-password --region $ECR_REGION --profile default
@@ -39,43 +35,6 @@ prune_local(){
 	docker system prune -af >> $logs_location 2>&1
 }
 
-pybuild(){
- 	echo "todo"
-}
-
-pyrun() {
-	docker_login 
-	FOUND=0
-	if [[ $# -ne 0 ]] ; then
-		# Tries to identify the project name
-		for repo in $REPO_LIST; do
-			if [ $repo == $1 ]; then
-				FOUND=1
-				PYTHON_PROJECT=$1
-				shift
-			fi
-		done
-	fi
-	if [[ $FOUND -eq 0 ]] ; then
-		# Project not found, assigning
-		PYTHON_PROJECT=`pwd | sed 's#.*/##'`	
-		# If project not in repo list, terminating
-		echo $REPO_LIST | grep -w -q $PYTHON_PROJECT
-		if [[ $? == 1 ]]; then
-			return
-		fi
-	fi
-	
-	IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`
-
-	if [[ $IS_DOCKER_RUNNING -eq 0 ]] ; then 
-		sudo /bin/systemctl start docker.service
-	fi
-
-	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
-
-	docker run -it "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest 
-}
 
 cache_static(){
 	pyrun staticdata -v ~/Static:/home/ec2-user/Static
