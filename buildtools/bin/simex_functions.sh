@@ -11,8 +11,8 @@ cache_static() {
 	fi
 
 	CACHE_LOCATION=/home/$USERNAME/.cache/staticdata
-	REMOTE_LOCATION=/home/$USERNAME/Static/StaticData
-	STATIC_PATH=/home/ec2-user/Static/StaticData                                                        
+	REMOTE_LOCATION=/home/$USERNAME/static/staticdata
+	STATIC_PATH=/home/ec2-user/static/staticdata                                                        
 	STATIC_FILE=static_$DATE.json
 
 	mkdir -p $CACHE_LOCATION                                                             
