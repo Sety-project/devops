@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export PYTHON_REGISTRY="878533356457.dkr.ecr.eu-west-2.amazonaws.com"     # --> Sety AWS
 export ECR_REGION=eu-west-2
 
 pybuild(){
