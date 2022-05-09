@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/sety/devops/buildtools/bin/bash_functions.sh
+source ~/Sety-project/devops/buildtools/bin/bash_functions.sh
 
 logs_location="/tmp/morning_log_$(date +%Y_%m_%d_%T).txt"
 
