@@ -1,6 +1,15 @@
 #!/bin/bash
 
 clone_repository() {
+	# Creates and clones an existing git repo
+	
+	#Wraps the following :
+	#mkdir repo
+	#cd repo
+	#git init
+	#git remote add origin <url>
+	#git fetch origin
+	#git checkout master
 
 	CURRENT_WKDIR=$(pwd)
 	NAMESPACE_PATH=/home/$USERNAME/$NAMESPACE
