@@ -28,6 +28,21 @@ cache_static() {
 	fi                                                                                   
 }
 
+cache_vault(){
+	CACHE_LOCATION=/home/$USERNAME/.cache/setyvault
+	VAULT_PATH=/home/ec2-user/.cache/setyvault
+	
+	mkdir -p $CACHE_LOCATION
+
+	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@ec2-3-8-151-236.eu-west-2.compute.amazonaws.com:$VAULT_PATH/* $CACHE_LOCATION/`
+
+	if [[ $? -eq 0 ]] ; then             
+		for entry in "$CACHE_LOCATION"/* ; do                                                
+			echo "Successfully downloaded $entry"                                 
+		done
+	fi
+}
+
 cache_feed() {
 	echo "TODO"
 }
