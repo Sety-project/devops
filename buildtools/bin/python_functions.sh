@@ -39,14 +39,18 @@ pyrun() {
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
         
 	if [[ $USERNAME == "ec2-user" ]]; then
-		docker run -d "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+		docker run -d -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	else
-		docker run -it "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+		docker run -it -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
 }
 
 # For calls on the EC2 instance
 pyrun_static(){
 	pyrun staticdata -v ~/static:/home/ec2-user/static
+}
+
+pyrun_histfeed(){
+	pyrun histfeed -e ftx -e build -e all -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v /tmp:/tmp
 }
 
