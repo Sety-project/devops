@@ -36,7 +36,7 @@ prune_local(){
 }
 
 prodbox(){
-	ssh -i ~/.cache/setykeys/ec2-one.pem ec2-user@ec2-3-8-151-236.eu-west-2.compute.amazonaws.com -p 22
+	ssh -i ~/.cache/setykeys/ec2-one.pem ec2-user@ec2-3-11-140-124.eu-west-2.compute.amazonaws.com -p 22
 }
 
 echo "Good morning!" >>  $logs_location
