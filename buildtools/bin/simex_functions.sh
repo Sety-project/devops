@@ -21,7 +21,7 @@ cache_static() {
 		echo -e "$STATIC_FILE found\nReplacing old file..."                                                                     
 	fi                                 
 	
-	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@ec2-3-8-151-236.eu-west-2.compute.amazonaws.com:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/`
+	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/`
 	                                                                                   	                                                                         
 	if [[ $? -eq 0 ]] ; then                                                             
 		echo "Successfully downloaded $STATIC_FILE."                                 
@@ -34,7 +34,7 @@ cache_vault(){
 	
 	mkdir -p $CACHE_LOCATION
 
-	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@ec2-3-8-151-236.eu-west-2.compute.amazonaws.com:$VAULT_PATH/* $CACHE_LOCATION/`
+	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/`
 
 	if [[ $? -eq 0 ]] ; then             
 		for entry in "$CACHE_LOCATION"/* ; do                                                
@@ -49,7 +49,7 @@ cache_mktdata(){
 	
 	mkdir -p $CACHE_LOCATION
 
-	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@ec2-3-8-151-236.eu-west-2.compute.amazonaws.com:$MKTDATA_PATH/* $CACHE_LOCATION/`
+	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/`
 
 	if [[ $? -eq 0 ]] ; then             
 		for entry in "$CACHE_LOCATION"/* ; do                                                
