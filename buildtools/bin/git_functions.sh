@@ -68,6 +68,14 @@ get_git_user_id() {
     curl -u "${LINUX_TO_GIT_USER[$1]}":$GIT_PAT https://api.github.com/users/"${LINUX_TO_GIT_USER[$1]}" | jq -r '.id'
 }
 
+gs(){
+	git status
+}
+
+gp(){
+	git pull
+}
+
 
 #curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/mol86/pylibs
 #curl -s -X GET --header "PRIVATE-TOKEN: $GITLAB_TOKEN" https://api.github.com/repos/mol86/pylibs
