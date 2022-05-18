@@ -49,10 +49,10 @@ cache_mktdata(){
 	
 	mkdir -p $CACHE_LOCATION
 
-	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/`
+	COMMAND_OUTPUT=`scp -rv -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/`
 
 	if [[ $? -eq 0 ]] ; then             
-		for entry in "$CACHE_LOCATION"/* ; do                                                
+		for entry in "$CACHE_LOCATION"/* ; do
 			echo "Successfully downloaded $entry"                                 
 		done
 	fi
