@@ -58,6 +58,23 @@ cache_mktdata(){
 	fi
 }
 
+cache_config(){
+	# Only caches ~/config/prod
+	
+	CACHE_LOCATION=/home/$USERNAME/config/prod
+	CONFIG_PATH=/home/ec2-user/config/prod
+	
+	mkdir -p $CACHE_LOCATION
+
+	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/`
+        
+	if [[ $? -eq 0 ]] ; then             
+		for entry in "$CACHE_LOCATION"/* ; do
+			echo "Successfully downloaded $entry"                                 
+		done
+	fi
+}
+
 cache_feed() {
 	echo "TODO"
 }
