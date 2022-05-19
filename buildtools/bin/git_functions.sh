@@ -16,14 +16,21 @@ clone_repository() {
 	#git fetch origin
 	#git checkout master
 
-	CURRENT_WKDIR=$(pwd)
-	NAMESPACE_PATH=/home/$USERNAME/$NAMESPACE
-	NEW_REPO=$NAMESPACE_PATH/$1
-
 	if [[ $# -ne 1 ]]; then
 		echo "Please specify which repository to clone"
 		return
 	fi
+
+	CURRENT_WKDIR=$(pwd)	
+	
+	if [[ $1 == "config" ]]; then
+		NAMESPACE_PATH=/home/$USERNAME
+	else
+		NAMESPACE_PATH=/home/$USERNAME/$NAMESPACE
+	fi
+	
+	NEW_REPO=$NAMESPACE_PATH/$1
+	mkdir -p $NEW_REPO
 	
 	# Return if repository is not empty
 	if [[ "$(ls -A $NEW_REPO)" ]]; then
