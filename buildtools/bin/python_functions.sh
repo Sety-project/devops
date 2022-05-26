@@ -51,12 +51,15 @@ pyrun_static(){
 }
 
 pyrun_histfeed(){
-	pyrun histfeed -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="all" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v /tmp:/tmp
+	pyrun histfeed -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="max" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v ~/mktdata:/home/ec2-user/mktdata -v /tmp:/tmp
 }
 
 
 # [Shortcut helpers to debug]
-#	docker run -it -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="all" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v /tmp:/tmp $PYTHON_REGISTRY/histfeed:latest
+# docker run -it -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="max" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/histfeed:latest
 
-#       docker run --entrypoint=bash -it -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="all" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v /tmp:/tmp $PYTHON_REGISTRY/histfeed:latest
+# docker run -it --entrypoint=bash -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="max" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/histfeed:latest
+
+
+
 
