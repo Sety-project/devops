@@ -47,6 +47,7 @@ cache_mktdata(){
 	CACHE_LOCATION=/home/$USERNAME/mktdata
 	MKTDATA_PATH=/home/ec2-user/mktdata
 	
+	rm -rf $CACHE_LOCATION
 	mkdir -p $CACHE_LOCATION
 
 	COMMAND_OUTPUT=`scp -rv -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/`
