@@ -58,6 +58,9 @@ pyrun_pfoptimizer(){
 	pyrun pfoptimizer -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="sysperp" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/pfoptimizer:latest
 }
 
+pyrun_tradeexecutor(){
+	pyrun tradeexecutor -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="sysperp" SUBACCOUNT='SysPerp' -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/tradeexecutor:latest
+}
 
 # [Shortcut helpers to debug]
 
