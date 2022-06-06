@@ -1,0 +1,27 @@
+# TODO to deploy new EC2 instance
+
+Install git
+sudo yum update -y
+sudo yum install git -y
+
+# Install .cache/setyvault    (No need for .cache/setykeys)
+mkdir -p ~/.cache/setyvault
+
+Install docker
+sudo yum update -y
+sudo yum install docker -y
+sudo service docker start
+#Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
+sudo usermod -a -G docker ec2-user
+
+Install silver searcher
+j devops
+cd buildtools/bin
+./ag_ec2_install.sh
+# Then, once in the silver_Searcher folder 
+./build
+
+Install .aws, .ssh, .cache/setyvault/
+
+# Install awscli
+# create crontab scripts for pyrun
