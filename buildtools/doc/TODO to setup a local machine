@@ -1,0 +1,88 @@
+# TODO to setup a local machine
+
+# Install vim
+sudo apt update
+sudo apt install vim
+
+# Install python 3.9 + pip + parquet tools
+# Python
+sudo apt update 
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa 
+sudo apt update
+sudo apt install python3.9
+
+# Install pip
+python3 -m pip install --user --upgrade pip
+
+# Install parquet-tools
+pip install parquet-tools
+
+#Install git
+sudo yum update -y
+sudo yum install git -y
+
+#Setup new git key-pair in .ssh/
+ssh-keygen -t ed25519 -C "victor.houlet@gmail.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+# Add the SSH key to your account on GitHub.
+# https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
+
+#make key files read only
+chmod 400 id_ed25519
+
+# Install .cache/setyvault    (No need for .cache/setykeys)
+mkdir -p ~/.cache/setyvault
+# Copy from local pc (or cache from a specific repo : TODO)
+
+# Install docker
+sudo yum update -y
+sudo yum install docker -y
+sudo service docker start
+#Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
+sudo usermod -a -G docker ec2-user
+
+# Install silver searcher
+j devops
+cd buildtools/bin
+./ag_ec2_install.sh
+# Then, once in the silver_Searcher folder 
+./build
+
+# Install .aws (import config and credentials from other machine's .aws)
+
+# Install awscli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+
+
+# Clone all repositories
+mkdir -p ~/Sety-project/devops && cd ~/Sety-project/devops
+git init
+git remote add origin git@github.com:Sety-project/devops.git
+git fetch origin
+git checkout master
+
+# Enrich ~/.bashrc
+echo "source ~/.cache/setykeys/git_token.sh" >> ~/.bashrc
+echo "source ~/Sety-project/devops/morning_routine.sh"  >> ~/.bashrc
+
+# Clone All git repositories
+source ~/.bashrc
+clone_repository pylibs
+clone_repository config
+clone_repository research
+
+# Install python3.9 venv
+jpl
+python3 -m venv .venv3.9
+
+# Create crontab scripts for pyrun
+crontab -e 
+# Add tasks
+30 2 * * * ~/Sety-project/devops/buildtools/bin/pyrun_static.sh
+0 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_all.sh
+
