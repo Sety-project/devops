@@ -6,7 +6,14 @@ source ~/Sety-project/devops/buildtools/bin/simex_functions.sh
 source ~/Sety-project/devops/buildtools/bin/python_functions.sh
 
 j() {
-    cd ~/Sety-project/$1
+	REPOS=(config mktdata .cache .ssh .aws)
+	
+	if [[ " ${REPOS[*]} " =~ " $1 " ]]; then
+		cd ~/$1
+		return
+	fi
+
+	cd ~/Sety-project/$1
 }
 
 jpl() {
