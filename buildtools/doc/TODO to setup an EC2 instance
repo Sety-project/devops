@@ -4,9 +4,11 @@
 sudo apt update
 sudo apt install vim
 
-Install git
+#Install git
 sudo yum update -y
 sudo yum install git -y
+sudo yum -y install iotop
+sudo yum -y install htop
 
 #Setup new git key-pair in .ssh/
 ssh-keygen -t ed25519 -C "victor.houlet@gmail.com"
