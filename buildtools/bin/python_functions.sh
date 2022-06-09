@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 
 export ECR_REGION=eu-west-2
 
@@ -47,7 +47,7 @@ pyrun() {
 
 # For calls on the EC2 instance
 pyrun_static(){
-	pyrun staticdata -v ~/static:/home/ec2-user/static
+	pyrun staticdata --rm --name=static_worker -v ~/static:/home/ec2-user/static
 }
 
 pyrun_histfeed(){
