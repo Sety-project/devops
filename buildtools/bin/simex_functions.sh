@@ -48,8 +48,9 @@ cache_mktdata(){
 	MKTDATA_PATH=/home/ec2-user/mktdata
 	
 	mkdir -p $CACHE_LOCATION
-
-	rsync -avh4z --info=progress2 -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/
+	
+	# use 4 IPv4, z compression, a send only differences, h human readable, v verbose
+	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/
 
 	if [[ $? -eq 0 ]] ; then             
 		for entry in "$CACHE_LOCATION"/* ; do
