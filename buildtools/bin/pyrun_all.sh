@@ -17,5 +17,11 @@ fi;
 status_code="$(docker container wait pfoptimizer_worker)"
 echo "Status code of pf_worker: $status_code"
 
+# Run pnlexplain every hour
+docker run -d --rm --name=riskpnl_worker -e USERNAME=$USERNAME -e RUN_TYPE="plex" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/riskpnl:latest
+
+status_code="$(docker container wait riskpnl_worker)"
+echo "Status code of riskpnl_worker: $status_code"
+
 # Run tradeexecutor only if pfoptimizer returns 0
 # Run tradeexecutor if files date less than 1 hour ago... we can design what we want...
