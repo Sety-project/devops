@@ -66,6 +66,6 @@ pyrun_riskpnl(){
 }
 
 pyrun_tradeexecutor(){
-	pyrun tradeexecutor --rm --name=tradeexecutor_worker -e RUN_TYPE="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
-	#-e EXCHANGE_NAME="ftx" -e SUBACCOUNT='SysPerp' -v ~/mktdata:/home/ec2-user/mktdata unused
+	pyrun tradeexecutor --rm --name=tradeexecutor_worker -e RUN_TYPE="sysperp" -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	# -v ~/mktdata:/home/ec2-user/mktdata unused
 }
