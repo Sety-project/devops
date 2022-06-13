@@ -21,10 +21,11 @@ cache_static() {
 		echo -e "$STATIC_FILE found\nReplacing old file..."                                                                     
 	fi                                 
 	
-	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/`
-	                                                                                   	                                                                         
+	#COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/`
+	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/
+	
 	if [[ $? -eq 0 ]] ; then                                                             
-		echo "Successfully downloaded $STATIC_FILE."                                 
+		echo -e "\nSuccessfully downloaded $STATIC_FILE."                                 
 	fi                                                                                   
 }
 
@@ -34,11 +35,12 @@ cache_vault(){
 	
 	mkdir -p $CACHE_LOCATION
 
-	COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/`
-
+	#COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/`
+	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/
+	
 	if [[ $? -eq 0 ]] ; then             
 		for entry in "$CACHE_LOCATION"/* ; do                                                
-			echo "Successfully downloaded $entry"                                 
+			echo -e "\nSuccessfully downloaded $entry"                                 
 		done
 	fi
 }
@@ -65,14 +67,15 @@ cache_config(){
 	CACHE_LOCATION=/home/$USERNAME/config/prod
 	CONFIG_PATH=/home/ec2-user/config/prod
 	
-	rm -rf $CACHE_LOCATION
+	#rm -rf $CACHE_LOCATION
 	mkdir -p $CACHE_LOCATION
 
-	COMMAND_OUTPUT=`scp -rp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/`
-        
-	if [[ $? -eq 0 ]] ; then             
+	#COMMAND_OUTPUT=`scp -rp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/`
+        rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/
+
+	if [[ $? -eq 0 ]] ; then
 		for entry in "$CACHE_LOCATION"/* ; do
-			echo "Successfully downloaded $entry"                                 
+			echo -e "\nSuccessfully downloaded $entry"                                 
 		done
 	fi
 }
