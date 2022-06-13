@@ -58,6 +58,10 @@ pyrun_pfoptimizer(){
 	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e EXCHANGE_NAME="ftx" -e RUN_TYPE="sysperp" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 }
 
+pyrun_riskpnl(){
+	pyrun riskpnl -e USERNAME=$USERNAME -e RUN_TYPE="plex" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+}
+
 pyrun_tradeexecutor(){
 	pyrun tradeexecutor --rm --name=tradeexecutor_worker -e EXCHANGE_NAME="ftx" -e RUN_TYPE="sysperp" SUBACCOUNT='SysPerp' -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 }
@@ -71,3 +75,4 @@ pyrun_tradeexecutor(){
 
 # docker run -it --entrypoint=bash -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="max" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/histfeed:latest
 
+#docker run -it -e USERNAME=$USERNAME -e RUN_TYPE="plex" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/riskpnl:latest
