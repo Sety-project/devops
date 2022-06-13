@@ -45,7 +45,10 @@ pyrun() {
 	fi
 }
 
-# For calls on the EC2 instance
+#################################
+# For calls on the EC2 instance #
+#################################
+
 pyrun_static(){
 	pyrun staticdata --rm --name=static_worker -v ~/static:/home/ec2-user/static
 }
@@ -66,14 +69,3 @@ pyrun_tradeexecutor(){
 	pyrun tradeexecutor --rm --name=tradeexecutor_worker -e RUN_TYPE="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 	#-e EXCHANGE_NAME="ftx" -e SUBACCOUNT='SysPerp' -v ~/mktdata:/home/ec2-user/mktdata unused
 }
-
-# [Shortcut helpers to debug]
-
-# docker build . --network=host -t 878533356457.dkr.ecr.eu-west-2.amazonaws.com/histfeed:latest -f histfeed/Dockerfile
-# docker build . --network=host --no-cache -t 878533356457.dkr.ecr.eu-west-2.amazonaws.com/histfeed:latest -f histfeed/Dockerfile
-
-# docker run -it -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="max" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/histfeed:latest
-
-# docker run -it --entrypoint=bash -e USERNAME=$USERNAME -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="max" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/histfeed:latest
-
-#docker run -it -e USERNAME=$USERNAME -e RUN_TYPE="plex" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/riskpnl:latest
