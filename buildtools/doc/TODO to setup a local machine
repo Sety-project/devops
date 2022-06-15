@@ -49,6 +49,7 @@ cd buildtools/bin
 ./ag_ec2_install.sh
 # Then, once in the silver_Searcher folder 
 ./build
+sudo apt install silversearcher-ag
 
 # Install .aws (import config and credentials from other machine's .aws)
 
@@ -77,8 +78,9 @@ clone_repository config
 clone_repository research
 
 # Install python3.9 venv
+sudo apt install python3.9-venv
 jpl
-python3 -m venv .venv3.9
+python3.9 -m venv .venv3.9   #make sure to install using python3.9 and not python3 which defaults to python3.10 !
 
 # Create crontab scripts for pyrun
 crontab -e 
