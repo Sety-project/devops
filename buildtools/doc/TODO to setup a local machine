@@ -1,5 +1,7 @@
 # TODO to setup a local machine
 
+# Passer la machine sur la timezone UTC
+
 # Install vim
 sudo apt update
 sudo apt install vim
