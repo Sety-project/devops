@@ -97,6 +97,30 @@ cache_pnl(){
 	fi
 }
 
+cache_tmp(){
+	# Caches all tmp app folders
+	apps="histfeed tradeexecutor pfoptimizer pnl"
+	
+	if [[ $# -ne 0 ]] ; then
+		apps="$@"
+	fi
+	
+	for app in $apps; do
+		CACHE_LOCATION=/tmp/$app
+		CONFIG_PATH=/tmp/$app
+	
+		rm -rf $CACHE_LOCATION
+		mkdir -p $CACHE_LOCATION
+
+		rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/
+
+		if [[ $? -eq 0 ]] ; then
+			for entry in "$CACHE_LOCATION"/* ; do
+				echo -e "\nSuccessfully downloaded $entry"                                 
+			done
+		fi
+	done
+}
 
 cache_feed() {
 	echo "TODO"
