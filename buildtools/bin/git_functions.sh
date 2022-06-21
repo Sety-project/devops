@@ -83,6 +83,12 @@ gp(){
 	git pull
 }
 
+gpa(){
+	jpl && gp
+	j devops && gp
+	j research &&  gp
+}
+
 
 #curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/mol86/pylibs
 #curl -s -X GET --header "PRIVATE-TOKEN: $GITLAB_TOKEN" https://api.github.com/repos/mol86/pylibs
