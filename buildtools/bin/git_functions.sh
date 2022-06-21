@@ -84,9 +84,11 @@ gp(){
 }
 
 gpa(){
+	WKDIR=$(pwd)
 	jpl && gp
 	j devops && gp
 	j research &&  gp
+	cd $WKDIR
 }
 
 
