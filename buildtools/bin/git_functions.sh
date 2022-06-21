@@ -85,9 +85,9 @@ gp(){
 
 gpa(){
 	WKDIR=$(pwd)
-	jpl && gp
-	j devops && gp
-	j research &&  gp
+	echo "Pulling pylibs..." && jpl && gp
+	echo -e "\nPulling devops..." && j devops && gp
+	echo -e "\nPulling research..." && j research &&  gp
 	cd $WKDIR
 }
 
