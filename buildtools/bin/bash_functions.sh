@@ -20,3 +20,6 @@ jpl() {
     cd ~/Sety-project/pylibs/$1
 }
 
+open_logs() {
+    libreoffice /tmp/pnl/portfolio_history_ftx_SysPerp.xlsx /tmp/tradeexecutor/all_by_symbol.csv
+}
