@@ -21,5 +21,7 @@ jpl() {
 }
 
 open_logs() {
-    libreoffice /tmp/pnl/portfolio_history_ftx_SysPerp.xlsx /tmp/tradeexecutor/all_by_symbol.csv
+	cache_tmp	
+	libreoffice /tmp/pnl/portfolio_history_ftx_SysPerp.xlsx &
+	libreoffice /tmp/tradeexecutor/all_by_symbol.csv &
 }
