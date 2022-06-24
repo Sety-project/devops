@@ -66,6 +66,8 @@ pyrun_riskpnl(){
 }
 
 pyrun_tradeexecutor(){
+	# removes those containers with the the IDs of all containers that have exited
+	docker rm $(docker ps --filter status=exited -q)
 	pyrun tradeexecutor --restart=on-failure --name=tradeexecutor_worker -e RUN_TYPE="sysperp" -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 	# -v ~/mktdata:/home/ec2-user/mktdata unused
 }
