@@ -21,7 +21,16 @@ jpl() {
 }
 
 open_logs() {
-	cache_tmp	
-	libreoffice /tmp/pnl/portfolio_history_ftx_SysPerp.xlsx &
-	libreoffice /tmp/tradeexecutor/all_by_symbol.csv &
+	cache_tmp
+	cd /home/david/Sety-project/pylibs/ux
+	source ../.venv3.9/bin/activate
+	jupyter notebook exec_logs.ipynb
 }
+
+clear_log() {
+  find ./ -type f -mtime +$1 -name '*.log' -execdir rm -f -- '{}' \;
+}
+
+# du -hsc *
+# find ./ -type f -mtime +1 -name '*.json' -execdir rm -f -- '{}' \;
+
