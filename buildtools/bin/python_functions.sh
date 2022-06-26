@@ -7,6 +7,8 @@ pybuild(){
 }
 
 pyrun() {
+  cd ~/config/prod && gp
+
 	docker_login 
 	REPO_LIST=$(aws ecr describe-repositories --region $ECR_REGION --query "repositories[].repositoryName" --output text)
 	FOUND=0
