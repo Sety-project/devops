@@ -106,7 +106,7 @@ cache_tmp(){
 	fi
 	
 	for app in $apps; do
-		CACHE_LOCATION=/tmp/$app
+		CACHE_LOCATION=/tmp/prod/$app
 		CONFIG_PATH=/tmp/$app
 	
 		rm -rf $CACHE_LOCATION
