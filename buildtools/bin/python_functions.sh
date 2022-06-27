@@ -7,6 +7,7 @@ pybuild(){
 }
 
 pyrun() {
+  echo -e "\nPulling config..."
   cd ~/config/prod && gp
 
 	docker_login 
