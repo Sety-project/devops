@@ -7,8 +7,7 @@ pybuild(){
 }
 
 pyrun() {
-  echo -e "\nPulling config..."
-  cd ~/config/prod && gp
+  git_pull_config
 
 	docker_login 
 	REPO_LIST=$(aws ecr describe-repositories --region $ECR_REGION --query "repositories[].repositoryName" --output text)
