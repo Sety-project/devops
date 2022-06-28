@@ -20,6 +20,10 @@ jpl() {
     cd ~/Sety-project/pylibs/$1
 }
 
+jtt() {
+  cd /tmp/tradeexecutor
+}
+
 open_logs() {
 	cache_tmp
 	cd /home/david/Sety-project/pylibs/ux
@@ -31,6 +35,9 @@ clear_log() {
   find ./ -type f -mtime +$1 -name '*.log' -execdir rm -f -- '{}' \;
 }
 
+read_mail() {
+  cat /var/spool/mail/ec2-user
+}
+
 # du -hsc *
-# find ./ -type f -mtime +1 -name '*.json' -execdir rm -f -- '{}' \;
 
