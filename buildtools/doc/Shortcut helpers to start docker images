@@ -1,5 +1,6 @@
 # [Shortcut helpers to debug]
 
+# jpl
 # docker build . --network=host -t 878533356457.dkr.ecr.eu-west-2.amazonaws.com/histfeed:latest -f histfeed/Dockerfile
 # docker build . --network=host --no-cache -t 878533356457.dkr.ecr.eu-west-2.amazonaws.com/histfeed:latest -f histfeed/Dockerfile
 
@@ -11,3 +12,6 @@
 
 #shortcut to run tradeexecutor
 #docker run -it --rm --name=tradeexecutor_worker -e RUN_TYPE="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/tradeexecutor:latest
+
+# here is how you enter a docker image
+# docker run -it --entrypoint=/bin/bash -e USERNAME=$USERNAME -e RUN_TYPE="plex"  -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp 878533356457.dkr.ecr.eu-west-2.amazonaws.com/riskpnl
