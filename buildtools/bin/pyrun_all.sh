@@ -18,7 +18,7 @@ status_code="$(docker container wait pfoptimizer_worker)"
 echo "Status code of pf_worker: $status_code"
 
 # Run pnlexplain every hour
-docker run -d --rm --name=riskpnl_worker -e USERNAME=$USERNAME -e RUN_TYPE="plex" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/riskpnl:latest
+docker run -d --rm --name=riskpnl_worker -e USERNAME=$USERNAME -e RUN_TYPE="plex"  -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/riskpnl:latest
 
 status_code="$(docker container wait riskpnl_worker)"
 echo "Status code of riskpnl_worker: $status_code"

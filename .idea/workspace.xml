@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8f203fc0-3796-4ec1-aa9e-2c8788487ec2" name="Changes" comment="git pull ocnfig prior to pyrun">
+      <change beforePath="$PROJECT_DIR$/buildtools/bin/pyrun_all.sh" beforeDir="false" afterPath="$PROJECT_DIR$/buildtools/bin/pyrun_all.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildtools/bin/python_functions.sh" beforeDir="false" afterPath="$PROJECT_DIR$/buildtools/bin/python_functions.sh" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2ApkRDMjiT3d3FCUySTqaanw9Nx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/david/Sety-project/devops&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f203fc0-3796-4ec1-aa9e-2c8788487ec2" name="Changes" comment="" />
+      <created>1655713903908</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655713903908</updated>
+    </task>
+    <task id="LOCAL-00001" summary="open_logs in office">
+      <created>1655912729051</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1655912729051</updated>
+    </task>
+    <task id="LOCAL-00002" summary="git_pull_config">
+      <created>1656270014966</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1656270014966</updated>
+    </task>
+    <task id="LOCAL-00003" summary="open_logs and clear_log">
+      <created>1656270109946</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1656270109946</updated>
+    </task>
+    <task id="LOCAL-00004" summary="pull config on pyrun">
+      <created>1656270130031</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1656270130031</updated>
+    </task>
+    <task id="LOCAL-00005" summary="cache_tmp in /tmp/prod/* not /tmp/*">
+      <created>1656270203551</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1656270203551</updated>
+    </task>
+    <task id="LOCAL-00006" summary="pulling config message">
+      <created>1656326817910</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1656326817910</updated>
+    </task>
+    <task id="LOCAL-00007" summary="git pull ocnfig prior to pyrun">
+      <created>1656363530919</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1656363530919</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="open_logs in office" />
+    <MESSAGE value="git_pull_config" />
+    <MESSAGE value="open_logs and clear_log" />
+    <MESSAGE value="pull config on pyrun" />
+    <MESSAGE value="cache_tmp in /tmp/prod/* not /tmp/*" />
+    <MESSAGE value="pulling config message" />
+    <MESSAGE value="git pull ocnfig prior to pyrun" />
+    <option name="LAST_COMMIT_MESSAGE" value="git pull ocnfig prior to pyrun" />
+  </component>
+</project>

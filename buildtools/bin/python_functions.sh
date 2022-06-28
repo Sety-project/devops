@@ -64,7 +64,7 @@ pyrun_pfoptimizer(){
 }
 
 pyrun_riskpnl(){
-	pyrun riskpnl -e USERNAME=$USERNAME -e RUN_TYPE="plex" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	pyrun riskpnl -e USERNAME=$USERNAME -e RUN_TYPE="plex"  -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 }
 
 pyrun_tradeexecutor(){
