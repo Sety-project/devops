@@ -21,7 +21,11 @@ jpl() {
 }
 
 jtt() {
-  cd /tmp/tradeexecutor
+  if [[ $USERNAME == "ec2-user" ]]; then
+    cd /tmp/tradeexecutor
+  else
+    cd /tmp/prod/tradeexecutor
+  fi
 }
 
 open_logs() {
@@ -36,8 +40,8 @@ clear_log() {
 }
 
 read_mail() {
-  cat /var/spool/mail/ec2-user
+  cat /var/spool/mail/$USERNAME
 }
 
-# du -hsc *
+# sudo du -hsc *
 

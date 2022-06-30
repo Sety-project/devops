@@ -98,6 +98,9 @@ cache_pnl(){
 }
 
 cache_tmp(){
+  # go to some existing directory to avoid: https://serverfault.com/questions/591743/rsync-getcwd-no-such-file-or-directory-2
+  cd ~
+
 	# Caches all tmp app folders
 	apps="histfeed tradeexecutor pfoptimizer pnl"
 	
@@ -120,6 +123,8 @@ cache_tmp(){
 			done
 		fi
 	done
+
+	jtt
 }
 
 cache_feed() {
