@@ -20,6 +20,7 @@ docker_pull (){
 }
 
 prune_ecr(){
+  # this is to prune ECR but there is a lifecyle policy in place so not useful generally
 	for repo in $REPO_LIST; do
 		#echo "list untagged images for $repo"
 		IMAGES_TO_DELETE=$(aws ecr list-images --region $ECR_REGION --repository-name $repo --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json)
