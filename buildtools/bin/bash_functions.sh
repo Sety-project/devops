@@ -39,7 +39,7 @@ clear_log() {
   find ./ -type f -mtime +$1 -name '*.log' -execdir rm -f -- '{}' \;
 }
 
-read_mail() {
+mail() {
   cat /var/spool/mail/$USERNAME
 }
 
