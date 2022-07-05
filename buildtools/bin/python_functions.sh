@@ -79,5 +79,5 @@ pyrun_ux(){
 	docker rm $(docker ps --filter status=exited -q)
 	#docker run -it --restart=on-failure -e DOCKER_IMAGE=helloworld -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
 	#docker run -it --restart=on-failure --entrypoint=bash -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
-	pyrun ux --restart=on-failure --name=ux_worker -v /var/run/docker.sock:/var/run/docker.sock
+	pyrun ux --restart=on-failure --name=ux_worker -v /var/run/docker.sock:/var/run/docker.sock -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 }
