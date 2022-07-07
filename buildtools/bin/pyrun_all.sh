@@ -1,7 +1,6 @@
 #!/bin/bash
 
 gpa
-source ~/.bashrc
 
 # Could use docker-compose at some point...
 

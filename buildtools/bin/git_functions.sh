@@ -90,6 +90,9 @@ gpa(){
 	echo -e "\nPulling research..." && j research &&  gp
 	echo -e "\nPulling config..." && j config &&  gp
 	cd $WKDIR
+
+	echo "source ~/.bashrc..."
+	source ~/.bashrc
 }
 
 
