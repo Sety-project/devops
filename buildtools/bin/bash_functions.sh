@@ -43,5 +43,10 @@ mail() {
   cat /var/spool/mail/$USERNAME
 }
 
+sbr() {
+  echo "source ~/.bashrc"
+  source ~/.bashrc
+}
+
 # sudo du -hsc *
 
