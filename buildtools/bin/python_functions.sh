@@ -63,7 +63,7 @@ pyrun_histfeed(){
 }
 
 pyrun_pfoptimizer(){
-	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 }
 
 pyrun_riskpnl(){

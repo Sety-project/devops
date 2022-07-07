@@ -13,7 +13,7 @@ echo "Status code of histfeed_worker: $status_code"
 
 # Run pfoptimizer only if histfeed returns 0
 if [[ $status_code -eq 0 ]]; then
-	docker run -d --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/pfoptimizer:latest
+	docker run -d --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/pfoptimizer:latest
 fi;
 
 status_code="$(docker container wait pfoptimizer_worker)"
