@@ -62,9 +62,9 @@ pyrun_histfeed(){
 pyrun_pfoptimizer(){
   echo "removing old shards"
   if [[ $USERNAME == "ec2-user" ]]; then
-    export DIRNAME = ~/config/prod/pfoptimizer
+    DIRNAME=~/config/prod/pfoptimizer
   else
-    export DIRNAME = ~/config/pfoptimizer
+    DIRNAME=~/config/pfoptimizer
   fi
   find $DIRNAME -name "weight_shard_*" -exec rm {} \;
 
