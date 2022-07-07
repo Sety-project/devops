@@ -11,14 +11,14 @@ echo "Status code of histfeed_worker: $status_code"
 
 # Run pfoptimizer only if histfeed returns 0
 if [[ $status_code -eq 0 ]]; then
-	docker run -d --rm --name=pfoptimizer_worker -e EXCHANGE_NAME="ftx" -e RUN_TYPE="sysperp" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/pfoptimizer:latest
+	docker run -d --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/pfoptimizer:latest
 fi;
 
 status_code="$(docker container wait pfoptimizer_worker)"
 echo "Status code of pf_worker: $status_code"
 
-# Run pnlexplain every hour
-docker run -d --rm --name=riskpnl_worker -e USERNAME=$USERNAME -e RUN_TYPE="plex"  -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/riskpnl:latest
+# Run pnlexplain every hour. Removed -e USERNAME=$USERNAME
+docker run -d --rm --name=riskpnl_worker -e RUN_TYPE="plex" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp $PYTHON_REGISTRY/riskpnl:latest
 
 status_code="$(docker container wait riskpnl_worker)"
 echo "Status code of riskpnl_worker: $status_code"

@@ -60,17 +60,17 @@ pyrun_histfeed(){
 }
 
 pyrun_pfoptimizer(){
-	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e EXCHANGE_NAME="ftx" -e RUN_TYPE="sysperp" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 }
 
 pyrun_riskpnl(){
-	pyrun riskpnl -e USERNAME=$USERNAME -e RUN_TYPE="plex"  -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	pyrun riskpnl -e RUN_TYPE="plex" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 }
 
 pyrun_tradeexecutor(){
 	# removes those containers with the the IDs of all containers that have exited
 	docker rm $(docker ps --filter status=exited -q)
-	pyrun tradeexecutor --restart=on-failure --name=tradeexecutor_worker -e RUN_TYPE="sysperp" -e EXCHANGE_NAME="ftx" -e SUB_ACCOUNT="SysPerp" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	pyrun tradeexecutor --restart=on-failure --name=tradeexecutor_worker -e ORDER="current_weights.csv" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 	# -v ~/mktdata:/home/ec2-user/mktdata unused
 }
 
