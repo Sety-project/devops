@@ -60,7 +60,16 @@ pyrun_histfeed(){
 }
 
 pyrun_pfoptimizer(){
+  echo "removing old shards"
+  if [[ $USERNAME == "ec2-user" ]]; then
+    export DIRNAME = ~/config/prod/pfoptimizer
+  else
+    export DIRNAME = ~/config/pfoptimizer
+  fi
+  find $DIRNAME -name "weight_shard_*" -exec rm {} \;
+
 	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	echo "ran new weights"
 }
 
 pyrun_riskpnl(){
@@ -69,8 +78,18 @@ pyrun_riskpnl(){
 
 pyrun_tradeexecutor(){
 	# removes those containers with the the IDs of all containers that have exited
-	docker rm $(docker ps --filter status=exited -q)
-	pyrun tradeexecutor --restart=on-failure --name=tradeexecutor_worker -e ORDER="current_weights.csv" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	#docker rm $(docker ps --filter status=exited -q)
+	if [[ $USERNAME == "ec2-user" ]]; then
+    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
+  else
+    DIRNAME="/home/$USERNAME/config/pfoptimizer"
+  fi
+	for order in $DIRNAME/weight_shard_*; do
+	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
+	  echo "tradeexecutor_$i"
+    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i" -e ORDER=$order -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+  done
+
 	# -v ~/mktdata:/home/ec2-user/mktdata unused
 }
 
