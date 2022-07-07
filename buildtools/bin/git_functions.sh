@@ -83,12 +83,6 @@ gp(){
 	git pull
 }
 
-git_pull_config(){
-  WKDIR=$(pwd)
-	echo -e "\nPulling config..." && j config &&  gp
-	cd $WKDIR
-}
-
 gpa(){
 	WKDIR=$(pwd)
 	echo "Pulling pylibs..." && jpl && gp
