@@ -79,11 +79,11 @@ pyrun_riskpnl(){
 pyrun_tradeexecutor(){
 	# removes those containers with the the IDs of all containers that have exited
 	docker rm $(docker ps --filter status=exited -q)
-	#if [[ $USERNAME == "ec2-user" ]]; then
-  #  DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
-  #else
-  #  DIRNAME="/home/$USERNAME/config/pfoptimizer"
-  #fi
+	if [[ $USERNAME == "ec2-user" ]]; then
+    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
+  else
+    DIRNAME="/home/$USERNAME/config/pfoptimizer"
+  fi
 	for order in $DIRNAME/weight_shard_*; do
 	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
 	  echo "tradeexecutor_$i"
