@@ -66,7 +66,7 @@ pyrun_pfoptimizer(){
   else
     DIRNAME=~/config/pfoptimizer
   fi
-  find $DIRNAME -name "weight_shard_*" -exec rm {} \;
+  find $DIRNAME -name "weight_shard_*" -exec rm -f {} \;
 
 	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
 	echo "ran new weights"
@@ -78,12 +78,12 @@ pyrun_riskpnl(){
 
 pyrun_tradeexecutor(){
 	# removes those containers with the the IDs of all containers that have exited
-	#docker rm $(docker ps --filter status=exited -q)
-	if [[ $USERNAME == "ec2-user" ]]; then
-    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
-  else
-    DIRNAME="/home/$USERNAME/config/pfoptimizer"
-  fi
+	docker rm $(docker ps --filter status=exited -q)
+	#if [[ $USERNAME == "ec2-user" ]]; then
+  #  DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
+  #else
+  #  DIRNAME="/home/$USERNAME/config/pfoptimizer"
+  #fi
 	for order in $DIRNAME/weight_shard_*; do
 	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
 	  echo "tradeexecutor_$i"
