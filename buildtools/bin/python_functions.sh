@@ -2,8 +2,12 @@
 
 export ECR_REGION=eu-west-2
 
-pybuild(){
- 	echo "todo"
+pystop(){
+  if [[ $1 != "all" ]]; then
+ 	  docker rm -f $(docker ps -aq --filter name=$1)
+ 	else
+ 	  docker rm -f $(docker ps -aq)
+ 	fi
 }
 
 pyrun() {
@@ -39,11 +43,11 @@ pyrun() {
 	fi
 
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
-        
+
 	if [[ $USERNAME == "ec2-user" ]]; then
-		docker run -d -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+	  docker run -d -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	else
-		docker run -it -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+	  docker run -it -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
 }
 
@@ -86,11 +90,9 @@ pyrun_tradeexecutor(){
   fi
 	for order in $DIRNAME/weight_shard_*; do
 	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
-	  echo "tradeexecutor_$i"
+	  echo "tradeexecutor_$i $USERNAME"
     pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i" -e ORDER=$order -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
   done
-
-	# -v ~/mktdata:/home/ec2-user/mktdata unused
 }
 
 pyrun_ux(){
