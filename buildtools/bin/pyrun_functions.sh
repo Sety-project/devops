@@ -64,7 +64,7 @@ pyrun() {
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
 
-	cd /tmp/$1
+	cd /tmp/$0
 }
 
 #################################
