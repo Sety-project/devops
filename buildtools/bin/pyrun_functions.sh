@@ -93,7 +93,7 @@ pyrun_pfoptimizer(){
   find $DIRNAME -name "weight_shard_*" -exec rm -f {} \;
 
 	pyrun pfoptimizer --rm --name=pfoptimizer_worker \
-	-e ORDER="sysperp" \
+	-e RUN_TYPE="sysperp" \
 	-e EXCHANGE="ftx" \
 	-e TYPE="not_passed" \
 	-e SUBACCOUNT="debug" \
