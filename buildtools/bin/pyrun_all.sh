@@ -5,7 +5,7 @@ gpa
 # Could use docker-compose at some point...
 
 # Run histfeed
-docker run -d --rm --name=histfeed_worker -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="all" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v ~/mktdata:/home/ec2-user/mktdata -v /tmp:/tmp --network host $PYTHON_REGISTRY/histfeed:latest
+docker run -d --rm --name=histfeed_worker -e EXCHANGE="ftx" -e RUN_TYPE="build" -e UNIVERSE="all" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v ~/mktdata:/home/ec2-user/mktdata -v /tmp:/tmp --network host $PYTHON_REGISTRY/histfeed:latest
 
 status_code="$(docker container wait histfeed_worker)"
 echo "Status code of histfeed_worker: $status_code"
