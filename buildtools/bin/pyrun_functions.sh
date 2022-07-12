@@ -108,8 +108,8 @@ pyrun_riskpnl(){
 	-e EXCHANGE="ftx" \
 	-e SUBACCOUNT="debug" \
 	-e NB_RUNS="not_passed" \
-	-e $PERIOD="not_passed" \
-	-e $DIRNAME="not_passed" \
+	-e PERIOD="not_passed" \
+	-e DIRNAME="not_passed" \
 	-e FILENAME="not_passed" \
 	-e $CONFIG="not_passed"
 	echo "ran pyrun_riskpnl"
