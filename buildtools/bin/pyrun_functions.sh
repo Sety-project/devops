@@ -63,8 +63,6 @@ pyrun() {
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
-
-	cd /tmp/$0
 }
 
 #################################
@@ -74,6 +72,7 @@ pyrun() {
 pyrun_static(){
 	pyrun staticdata --rm --name=static_worker
 	echo "ran pyrun_static"
+	cd /tmp/staticdata
 }
 
 pyrun_histfeed(){
@@ -83,6 +82,7 @@ pyrun_histfeed(){
 	-e UNIVERSE="all" \
 	-e NB_DAYS="not_passed"
   echo "ran pyrun_histfeed"
+  cd /tmp/histfeed
 }
 
 pyrun_pfoptimizer(){
@@ -102,6 +102,7 @@ pyrun_pfoptimizer(){
 	-e DEPTH="not_passed" \
 	-e CONFIG="not_passed"
 	echo "ran pyrun_pfoptimizer"
+	cd /tmp/pfoptimizer/
 }
 
 pyrun_riskpnl(){
@@ -115,6 +116,7 @@ pyrun_riskpnl(){
 	-e FILENAME="not_passed" \
 	-e CONFIG="not_passed"
 	echo "ran pyrun_riskpnl"
+	cd /tmp/riskpnl/
 }
 
 pyrun_tradeexecutor(){
@@ -131,9 +133,11 @@ pyrun_tradeexecutor(){
     -e ORDER=$order \
     -e CONFIG="prod" \
     -e EXCHANGE="ftx" \
-    -e SUBACCOUNT="debug"
+    -e SUBACCOUNT="debug" \
+    -e NB_RUNS="2"
     echo "ran pyrun_tradeexecutor"
   done
+  cd /tmp/tradeexecutor/
 }
 
 pyrun_ux(){
@@ -141,5 +145,5 @@ pyrun_ux(){
 	#docker run -it --restart=on-failure -e DOCKER_IMAGE=helloworld -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
 	#docker run -it --restart=on-failure --entrypoint=bash -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
 	pyrun ux --restart=on-failure --name=ux_worker
-	echo "ran pyrun_ux"
+	echo "launched pyrun_ux"
 }
