@@ -63,6 +63,8 @@ pyrun() {
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
+
+	cd /tmp/$1
 }
 
 #################################
@@ -97,8 +99,8 @@ pyrun_pfoptimizer(){
 	-e EXCHANGE="ftx" \
 	-e TYPE="not_passed" \
 	-e SUBACCOUNT="debug" \
-	-e depth="not_passed" \
-	-e config="not_passed"
+	-e DEPTH="not_passed" \
+	-e CONFIG="not_passed"
 	echo "ran pyrun_pfoptimizer"
 }
 
@@ -111,7 +113,7 @@ pyrun_riskpnl(){
 	-e PERIOD="not_passed" \
 	-e DIRNAME="not_passed" \
 	-e FILENAME="not_passed" \
-	-e $CONFIG="not_passed"
+	-e CONFIG="not_passed"
 	echo "ran pyrun_riskpnl"
 }
 
