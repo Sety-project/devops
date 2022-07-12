@@ -11,6 +11,7 @@ pystop(){
 }
 
 pyrun() {
+  # because the run.sh demands them, all params must be passed incl optionals. "not_passed" will apply default from python script
   gpa
 
 	docker_login 
@@ -42,12 +43,25 @@ pyrun() {
 		sudo /bin/systemctl start docker.service
 	fi
 
+	docker rm $(docker ps --filter status=exited -q)
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 
 	if [[ $USERNAME == "ec2-user" ]]; then
-	  docker run -d -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+	  docker run -d -e USERNAME=$USERNAME "${@}" \
+	  -v ~/static:/home/ec2-user/static \
+	  -v ~/mktdata:/home/ec2-user/mktdata \
+	  -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault \
+	  -v ~/config/prod:/home/ec2-user/config \
+	  -v /tmp:/tmp \
+	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	else
-	  docker run -it -e USERNAME=$USERNAME "${@}" --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+	  docker run -it -e USERNAME=$USERNAME "${@}" \
+	  -v ~/static:/home/ec2-user/static \
+	  -v ~/mktdata:/home/ec2-user/mktdata \
+	  -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault \
+	  -v ~/config/prod:/home/ec2-user/config \
+	  -v /tmp:/tmp \
+	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
 }
 
@@ -56,11 +70,17 @@ pyrun() {
 #################################
 
 pyrun_static(){
-	pyrun staticdata --rm --name=static_worker -v ~/static:/home/ec2-user/static
+	pyrun staticdata --rm --name=static_worker
+	echo "ran pyrun_static"
 }
 
 pyrun_histfeed(){
-	pyrun histfeed --rm --name=histfeed_worker -e EXCHANGE_NAME="ftx" -e RUN_TYPE="build" -e UNIVERSE="all" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v ~/mktdata:/home/ec2-user/mktdata -v /tmp:/tmp
+	pyrun histfeed --rm --name=histfeed_worker \
+	-e EXCHANGE="ftx" \
+	-e RUN_TYPE="build" \
+	-e UNIVERSE="all" \
+	-e NB_DAYS="not_passed"
+  echo "ran pyrun_histfeed"
 }
 
 pyrun_pfoptimizer(){
@@ -72,17 +92,31 @@ pyrun_pfoptimizer(){
   fi
   find $DIRNAME -name "weight_shard_*" -exec rm -f {} \;
 
-	pyrun pfoptimizer --rm --name=pfoptimizer_worker -e ORDER="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/mktdata:/home/ec2-user/mktdata -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
-	echo "ran new weights"
+	pyrun pfoptimizer --rm --name=pfoptimizer_worker \
+	-e ORDER="sysperp" \
+	-e EXCHANGE="ftx" \
+	-e TYPE="not_passed" \
+	-e SUBACCOUNT="debug" \
+	-e depth="not_passed" \
+	-e config="not_passed"
+	echo "ran pyrun_pfoptimizer"
 }
 
 pyrun_riskpnl(){
-	pyrun riskpnl -e RUN_TYPE="plex" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	pyrun riskpnl --rm --name=riskpnl_worker \
+	-e RUN_TYPE="plex" \
+	-e EXCHANGE="ftx" \
+	-e SUBACCOUNT="debug" \
+	-e NB_RUNS="not_passed" \
+	-e $PERIOD="not_passed" \
+	-e $DIRNAME="not_passed" \
+	-e FILENAME="not_passed" \
+	-e $CONFIG="not_passed"
+	echo "ran pyrun_riskpnl"
 }
 
 pyrun_tradeexecutor(){
 	# removes those containers with the the IDs of all containers that have exited
-	docker rm $(docker ps --filter status=exited -q)
 	if [[ $USERNAME == "ec2-user" ]]; then
     DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
   else
@@ -91,14 +125,19 @@ pyrun_tradeexecutor(){
 	for order in $DIRNAME/weight_shard_*; do
 	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
 	  echo "tradeexecutor_$i $USERNAME"
-    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i" -e ORDER=$order -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
+    -e ORDER=$order \
+    -e CONFIG="prod" \
+    -e EXCHANGE="ftx" \
+    -e SUBACCOUNT="debug"
+    echo "ran pyrun_tradeexecutor"
   done
 }
 
 pyrun_ux(){
 	# removes those containers with the the IDs of all containers that have exited
-	docker rm $(docker ps --filter status=exited -q)
 	#docker run -it --restart=on-failure -e DOCKER_IMAGE=helloworld -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
 	#docker run -it --restart=on-failure --entrypoint=bash -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
-	pyrun ux --restart=on-failure --name=ux_worker -v /var/run/docker.sock:/var/run/docker.sock -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault -v ~/config/prod:/home/ec2-user/config -v /tmp:/tmp
+	pyrun ux --restart=on-failure --name=ux_worker
+	echo "ran pyrun_ux"
 }

@@ -3,7 +3,7 @@
 source ~/Sety-project/devops/buildtools/bin/variables.sh
 source ~/Sety-project/devops/buildtools/bin/git_functions.sh
 source ~/Sety-project/devops/buildtools/bin/simex_functions.sh
-source ~/Sety-project/devops/buildtools/bin/python_functions.sh
+source ~/Sety-project/devops/buildtools/bin/pyrun_functions.sh
 
 j() {
 	REPOS=(config mktdata .cache .ssh .aws)
@@ -48,5 +48,5 @@ sbr() {
   source ~/.bashrc
 }
 
-# sudo du -hsc *
+# sudo du -hsc * /*
 
