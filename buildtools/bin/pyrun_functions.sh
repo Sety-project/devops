@@ -96,9 +96,9 @@ pyrun_pfoptimizer(){
 
 	pyrun pfoptimizer --rm --name=pfoptimizer_worker \
 	-e RUN_TYPE="sysperp" \
-	-e EXCHANGE="ftx" \
+  -e EXCHANGE=$1 \
+  -e SUBACCOUNT=$2 \
 	-e TYPE="not_passed" \
-	-e SUBACCOUNT="debug" \
 	-e DEPTH="not_passed" \
 	-e CONFIG="not_passed"
 	echo "ran pyrun_pfoptimizer"
@@ -108,8 +108,8 @@ pyrun_pfoptimizer(){
 pyrun_riskpnl(){
 	pyrun riskpnl --rm --name=riskpnl_worker \
 	-e RUN_TYPE="plex" \
-	-e EXCHANGE="ftx" \
-	-e SUBACCOUNT="debug" \
+  -e EXCHANGE=$1 \
+  -e SUBACCOUNT=$2 \
 	-e NB_RUNS="not_passed" \
 	-e PERIOD="not_passed" \
 	-e DIRNAME="not_passed" \
@@ -131,8 +131,8 @@ pyrun_tradeexecutor(){
     pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
     -e ORDER="weight_shard_$i" \
     -e CONFIG="not_passed" \
-    -e EXCHANGE="ftx" \
-    -e SUBACCOUNT="debug" \
+    -e EXCHANGE=$1 \
+    -e SUBACCOUNT=$2 \
     -e NB_RUNS="9999"
     echo "ran pyrun_tradeexecutor"
   done
