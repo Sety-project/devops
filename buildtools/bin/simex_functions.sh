@@ -102,7 +102,7 @@ cache_tmp(){
   cd ~
 
 	# Caches all tmp app folders
-	apps="histfeed tradeexecutor pfoptimizer riskpnl"
+	apps="histfeed tradeexecutor pfoptimizer riskpnl ux"
 	
 	if [[ $# -ne 0 ]] ; then
 		apps="$@"
