@@ -128,12 +128,12 @@ pyrun_tradeexecutor(){
 	for order in $DIRNAME/weight_shard_*; do
 	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
 	  echo "tradeexecutor_$i $order"
-#    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
-#    -e ORDER="weight_shard_$i" \
-#    -e CONFIG="not_passed" \
-#    -e EXCHANGE=$1 \
-#    -e SUBACCOUNT=$2 \
-#    -e NB_RUNS="9999"
+    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
+    -e ORDER="weight_shard_$i" \
+    -e CONFIG="not_passed" \
+    -e EXCHANGE=$1 \
+    -e SUBACCOUNT=$2 \
+    -e NB_RUNS="9999"
     echo "ran pyrun_tradeexecutor $1 $2"
   done
   cd /tmp/tradeexecutor/
