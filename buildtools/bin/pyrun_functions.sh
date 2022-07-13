@@ -120,7 +120,6 @@ pyrun_riskpnl(){
 }
 
 pyrun_tradeexecutor(){
-	# removes those containers with the the IDs of all containers that have exited
 	if [[ $USERNAME == "ec2-user" ]]; then
     DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
   else
@@ -128,13 +127,13 @@ pyrun_tradeexecutor(){
   fi
 	for order in $DIRNAME/weight_shard_*; do
 	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
-	  echo "tradeexecutor_$i $USERNAME"
+	  echo "tradeexecutor_$i $order"
     pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
     -e ORDER=$order \
-    -e CONFIG="prod" \
+    -e CONFIG="not_passed" \
     -e EXCHANGE="ftx" \
     -e SUBACCOUNT="debug" \
-    -e NB_RUNS="2"
+    -e NB_RUNS="1"
     echo "ran pyrun_tradeexecutor"
   done
   cd /tmp/tradeexecutor/
