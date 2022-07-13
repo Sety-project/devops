@@ -121,7 +121,7 @@ pyrun_riskpnl(){
 
 pyrun_tradeexecutor(){
 	if [[ $USERNAME == "ec2-user" ]]; then
-    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
+    DIRNAME="~/config/prod/pfoptimizer"
   else
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
