@@ -129,7 +129,7 @@ pyrun_tradeexecutor(){
 	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
 	  echo "tradeexecutor_$i $order"
     pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
-    -e ORDER=$order \
+    -e ORDER="weight_shard_$i" \
     -e CONFIG="not_passed" \
     -e EXCHANGE="ftx" \
     -e SUBACCOUNT="debug" \

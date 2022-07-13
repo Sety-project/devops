@@ -1,4 +1,4 @@
 30 2 * * 1 ~/Sety-project/devops/buildtools/bin/pyrun_static.sh
 5 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_histfeed.sh
 10-60/15 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_riskpnl.sh
-10 */4 * * * ~/Sety-project/devops/buildtools/bin/pyrun_pfoptimizer.sh
+10 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_pfoptimizer.sh

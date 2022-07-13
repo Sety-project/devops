@@ -8,7 +8,7 @@ main(*args,**kwargs) is decorated with @api
 @api validates arguments
 @api creates a logger called module_name in /tmp/module_name/%Y%m%d_%H%M%S_info.log
 log has at least:
- - "running [comand line API]"
+ - "running [command line API]"
  - result
  - exceptions
  - and anything useful can be filled by lower level
