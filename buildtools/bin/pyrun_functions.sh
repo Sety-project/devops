@@ -133,7 +133,7 @@ pyrun_tradeexecutor(){
     -e CONFIG="not_passed" \
     -e EXCHANGE="ftx" \
     -e SUBACCOUNT="debug" \
-    -e NB_RUNS="1"
+    -e NB_RUNS="9999"
     echo "ran pyrun_tradeexecutor"
   done
   cd /tmp/tradeexecutor/
