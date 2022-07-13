@@ -59,7 +59,7 @@ pyrun() {
 	  -v ~/static:/home/ec2-user/static \
 	  -v ~/mktdata:/home/ec2-user/mktdata \
 	  -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault \
-	  -v ~/config/prod:/home/ec2-user/config \
+	  #-v ~/config/prod:/home/ec2-user/config \
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
