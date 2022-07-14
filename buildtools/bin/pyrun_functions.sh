@@ -3,7 +3,7 @@
 export ECR_REGION=eu-west-2
 
 pystop(){
-  if [[ $1 != "all" ]]; then
+  if [[ $1 != "" ]]; then
  	  docker rm -f $(docker ps -aq --filter name="$1")
  	else
  	  docker rm -f $(docker ps -aq)
@@ -78,7 +78,7 @@ pyrun_static(){
 
 # running interactive so it's blocking
 pyrun_histfeed(){
-	pyrun histfeed -it --rm --name=histfeed_worker_$1 \
+	pyrun histfeed -it --rm --name=histfeed_worker_"$1" \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
 	-e UNIVERSE="all" \
@@ -96,7 +96,7 @@ pyrun_pfoptimizer(){
   fi
   find $DIRNAME -name "weightshard_*" -exec rm -f {} \;
 
-	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_$1_$2 \
+	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_"$1"_"$2" \
 	-e RUN_TYPE="sysperp" \
   -e EXCHANGE="$1" \
   -e SUBACCOUNT="$2" \
@@ -108,7 +108,7 @@ pyrun_pfoptimizer(){
 }
 
 pyrun_riskpnl(){
-	pyrun riskpnl -d --rm --name=riskpnl_worker_$1_$2 \
+	pyrun riskpnl -d --rm --name=riskpnl_worker_"$1"_"$2" \
 	-e RUN_TYPE="plex" \
   -e EXCHANGE="$1" \
   -e SUBACCOUNT="$2" \
@@ -143,6 +143,6 @@ pyrun_ux(){
 	# removes those containers with the the IDs of all containers that have exited
 	#docker run -it --restart=on-failure -e DOCKER_IMAGE=helloworld -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
 	#docker run -it --restart=on-failure --entrypoint=bash -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
-	pyrun ux -d --restart=on-failure --name=ux_worker
+  pyrun ux -d --restart=on-failure --name=ux_worker
 	echo "launched pyrun_ux"
 }
