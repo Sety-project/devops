@@ -46,6 +46,7 @@ pyrun() {
 	docker rm $(docker ps --filter status=exited -q)
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 
+  # they're in fact both running without detach falg...
 	if [[ $USERNAME == "ec2-user" ]]; then
 	  docker run -e USERNAME=$USERNAME "${@}" \
 	  -v ~/static:/home/ec2-user/static \
@@ -70,12 +71,12 @@ pyrun() {
 #################################
 
 pyrun_static(){
-	pyrun staticdata --rm --name=static_worker
+	pyrun staticdata -d --rm --name=static_worker
 	echo "launched pyrun_static"
 	cd /tmp/staticdata
 }
 
-pyrun_histfeed(){
+pyrun_histfeed(){# running interactive so it's blocking
 	pyrun histfeed -it --rm --name=histfeed_worker_$1 \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
@@ -94,7 +95,7 @@ pyrun_pfoptimizer(){
   fi
   find $DIRNAME -name "weightshard_*" -exec rm -f {} \;
 
-	pyrun pfoptimizer --rm --name=pfoptimizer_worker_$1_$2 \
+	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_$1_$2 \
 	-e RUN_TYPE="sysperp" \
   -e EXCHANGE="$1" \
   -e SUBACCOUNT="$2" \
@@ -126,7 +127,7 @@ pyrun_tradeexecutor(){
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
-    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_"$order""\
+    pyrun tradeexecutor -d --restart=on-failure --name="tradeexecutor_"$order""\
     -e ORDER="$order" \
     -e CONFIG="not_passed" \
     -e EXCHANGE="$1" \
@@ -141,6 +142,6 @@ pyrun_ux(){
 	# removes those containers with the the IDs of all containers that have exited
 	#docker run -it --restart=on-failure -e DOCKER_IMAGE=helloworld -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
 	#docker run -it --restart=on-failure --entrypoint=bash -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
-	pyrun ux --restart=on-failure --name=ux_worker
+	pyrun ux -d --restart=on-failure --name=ux_worker
 	echo "launched pyrun_ux"
 }
