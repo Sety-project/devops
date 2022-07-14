@@ -6,4 +6,4 @@ source ~/.bashrc
 echo "stop tradeexecutor***"
 pystop tradeexecutor
 echo "restart tradeexecutor on current shards"
-pyrun tradeexecutor
+pyrun tradeexecutor $1 $2
