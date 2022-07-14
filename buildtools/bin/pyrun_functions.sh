@@ -100,7 +100,7 @@ pyrun_pfoptimizer(){
   -e SUBACCOUNT="$2" \
 	-e TYPE="not_passed" \
 	-e DEPTH="not_passed" \
-	-e CONFIG="not_passed"
+	-e CONFIG="prod"
 	echo "ran pyrun_pfoptimizer $1 $2"
 	cd /tmp/pfoptimizer/
 }
@@ -114,7 +114,7 @@ pyrun_riskpnl(){
 	-e PERIOD="not_passed" \
 	-e DIRNAME="not_passed" \
 	-e FILENAME="not_passed" \
-	-e CONFIG="not_passed"
+	-e CONFIG="prod"
 	echo "ran pyrun_riskpnl $1 $2"
 	cd /tmp/riskpnl/
 }
@@ -125,16 +125,14 @@ pyrun_tradeexecutor(){
   else
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
-	for order in $DIRNAME/weight_shard_*; do
-	  i=$(grep -oP 'weightshard_\K.*?(?=.csv)' <<< $order)
-	  echo "tradeexecutor_"$i" weightshard_"$i""
-#    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_"$i""\
-#    -e ORDER="weightshard_"$i".csv" \
-#    -e CONFIG="not_passed" \
-#    -e EXCHANGE="$1" \
-#    -e SUBACCOUNT="$2" \
-#    -e NB_RUNS="9999"
-    echo "ran pyrun_tradeexecutor weight_"$i" "$1" "$2""
+	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
+    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_"$order""\
+    -e ORDER=$order \
+    -e CONFIG="prod" \
+    -e EXCHANGE="$1" \
+    -e SUBACCOUNT="$2" \
+    -e NB_RUNS="1"
+    echo "ran pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
 }
