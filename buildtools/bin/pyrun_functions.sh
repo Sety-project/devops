@@ -114,7 +114,7 @@ pyrun_riskpnl(){
 	-e PERIOD="not_passed" \
 	-e DIRNAME="not_passed" \
 	-e FILENAME="not_passed" \
-	-e CONFIG="prod"
+	-e CONFIG="not_passed"
 	echo "launched pyrun_riskpnl $1 $2"
 	cd /tmp/riskpnl/
 }
