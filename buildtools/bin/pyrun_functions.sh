@@ -76,7 +76,7 @@ pyrun_static(){
 }
 
 pyrun_histfeed(){
-	pyrun histfeed --rm --name=histfeed_worker \
+	pyrun histfeed --rm --name=histfeed_worker_$1 \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
 	-e UNIVERSE="all" \
@@ -92,9 +92,9 @@ pyrun_pfoptimizer(){
   else
     DIRNAME=~/config/pfoptimizer
   fi
-  find $DIRNAME -name "weight_shard_*" -exec rm -f {} \;
+  find $DIRNAME -name "weightshard_*" -exec rm -f {} \;
 
-	pyrun pfoptimizer --rm --name=pfoptimizer_worker \
+	pyrun pfoptimizer --rm --name=pfoptimizer_worker_$1_$2 \
 	-e RUN_TYPE="sysperp" \
   -e EXCHANGE="$1" \
   -e SUBACCOUNT="$2" \
@@ -106,7 +106,7 @@ pyrun_pfoptimizer(){
 }
 
 pyrun_riskpnl(){
-	pyrun riskpnl --rm --name=riskpnl_worker \
+	pyrun riskpnl --rm --name=riskpnl_worker_$1_$2 \
 	-e RUN_TYPE="plex" \
   -e EXCHANGE="$1" \
   -e SUBACCOUNT="$2" \
@@ -126,15 +126,15 @@ pyrun_tradeexecutor(){
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
 	for order in $DIRNAME/weight_shard_*; do
-	  i=$(grep -oP '_\K.*?(?=.csv)' <<< $order)
-	  echo "tradeexecutor_$i weight_$i"
-    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
-    -e ORDER="weight_$i.csv" \
-    -e CONFIG="not_passed" \
-    -e EXCHANGE="$1" \
-    -e SUBACCOUNT="$2" \
-    -e NB_RUNS="9999"
-    echo "ran pyrun_tradeexecutor weight_$i $1 $2"
+	  i=$(grep -oP 'weightshard_\K.*?(?=.csv)' <<< $order)
+	  echo "tradeexecutor_"$i" weightshard_"$i""
+#    pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_"$i""\
+#    -e ORDER="weightshard_"$i".csv" \
+#    -e CONFIG="not_passed" \
+#    -e EXCHANGE="$1" \
+#    -e SUBACCOUNT="$2" \
+#    -e NB_RUNS="9999"
+    echo "ran pyrun_tradeexecutor weight_"$i" "$1" "$2""
   done
   cd /tmp/tradeexecutor/
 }

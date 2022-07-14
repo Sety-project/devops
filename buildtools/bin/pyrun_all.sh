@@ -1,10 +1,7 @@
 #!/bin/bash
 source ~/.bashrc
 
-gpa
-
 # Could use docker-compose at some point...
-
 # Run histfeed
 pyrun_histfeed ftx
 
