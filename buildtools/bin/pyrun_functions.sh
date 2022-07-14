@@ -131,7 +131,7 @@ pyrun_tradeexecutor(){
     -e CONFIG="not_passed" \
     -e EXCHANGE="$1" \
     -e SUBACCOUNT="$2" \
-    -e NB_RUNS="1"
+    -e NB_RUNS="999"
     echo "launched pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
