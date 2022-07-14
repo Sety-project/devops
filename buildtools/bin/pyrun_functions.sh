@@ -76,7 +76,8 @@ pyrun_static(){
 	cd /tmp/staticdata
 }
 
-pyrun_histfeed(){# running interactive so it's blocking
+# running interactive so it's blocking
+pyrun_histfeed(){
 	pyrun histfeed -it --rm --name=histfeed_worker_$1 \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
