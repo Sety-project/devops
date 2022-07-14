@@ -71,7 +71,7 @@ pyrun() {
 
 pyrun_static(){
 	pyrun staticdata --rm --name=static_worker
-	echo "ran pyrun_static"
+	echo "launched pyrun_static"
 	cd /tmp/staticdata
 }
 
@@ -81,7 +81,7 @@ pyrun_histfeed(){
 	-e RUN_TYPE="build" \
 	-e UNIVERSE="all" \
 	-e NB_DAYS="not_passed"
-  echo "ran pyrun_histfeed"
+  echo "launched pyrun_histfeed"
   cd /tmp/histfeed
 }
 
@@ -100,8 +100,8 @@ pyrun_pfoptimizer(){
   -e SUBACCOUNT="$2" \
 	-e TYPE="not_passed" \
 	-e DEPTH="not_passed" \
-	-e CONFIG="prod"
-	echo "ran pyrun_pfoptimizer $1 $2"
+	-e CONFIG="not_passed"
+	echo "launched pyrun_pfoptimizer $1 $2"
 	cd /tmp/pfoptimizer/
 }
 
@@ -115,7 +115,7 @@ pyrun_riskpnl(){
 	-e DIRNAME="not_passed" \
 	-e FILENAME="not_passed" \
 	-e CONFIG="prod"
-	echo "ran pyrun_riskpnl $1 $2"
+	echo "launched pyrun_riskpnl $1 $2"
 	cd /tmp/riskpnl/
 }
 
@@ -127,12 +127,12 @@ pyrun_tradeexecutor(){
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
     pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_"$order""\
-    -e ORDER=$order \
-    -e CONFIG="prod" \
+    -e ORDER="$order" \
+    -e CONFIG="not_passed" \
     -e EXCHANGE="$1" \
     -e SUBACCOUNT="$2" \
     -e NB_RUNS="1"
-    echo "ran pyrun_tradeexecutor "$order""
+    echo "launched pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
 }
