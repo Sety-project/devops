@@ -4,7 +4,7 @@ export ECR_REGION=eu-west-2
 
 pystop(){
   if [[ $1 != "all" ]]; then
- 	  docker rm -f $(docker ps -aq --filter name=$1)
+ 	  docker rm -f $(docker ps -aq --filter name="$1")
  	else
  	  docker rm -f $(docker ps -aq)
  	fi
@@ -77,7 +77,7 @@ pyrun_static(){
 
 pyrun_histfeed(){
 	pyrun histfeed --rm --name=histfeed_worker \
-	-e EXCHANGE="ftx" \
+	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
 	-e UNIVERSE="all" \
 	-e NB_DAYS="not_passed"
@@ -96,8 +96,8 @@ pyrun_pfoptimizer(){
 
 	pyrun pfoptimizer --rm --name=pfoptimizer_worker \
 	-e RUN_TYPE="sysperp" \
-  -e EXCHANGE=$1 \
-  -e SUBACCOUNT=$2 \
+  -e EXCHANGE="$1" \
+  -e SUBACCOUNT="$2" \
 	-e TYPE="not_passed" \
 	-e DEPTH="not_passed" \
 	-e CONFIG="not_passed"
@@ -108,8 +108,8 @@ pyrun_pfoptimizer(){
 pyrun_riskpnl(){
 	pyrun riskpnl --rm --name=riskpnl_worker \
 	-e RUN_TYPE="plex" \
-  -e EXCHANGE=$1 \
-  -e SUBACCOUNT=$2 \
+  -e EXCHANGE="$1" \
+  -e SUBACCOUNT="$2" \
 	-e NB_RUNS="not_passed" \
 	-e PERIOD="not_passed" \
 	-e DIRNAME="not_passed" \
@@ -121,7 +121,7 @@ pyrun_riskpnl(){
 
 pyrun_tradeexecutor(){
 	if [[ $USERNAME == "ec2-user" ]]; then
-    DIRNAME="~/config/prod/pfoptimizer"
+    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
   else
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
@@ -131,8 +131,8 @@ pyrun_tradeexecutor(){
     pyrun tradeexecutor --restart=on-failure --name="tradeexecutor_$i"\
     -e ORDER="weight_$i.csv" \
     -e CONFIG="not_passed" \
-    -e EXCHANGE=$1 \
-    -e SUBACCOUNT=$2 \
+    -e EXCHANGE="$1" \
+    -e SUBACCOUNT="$2" \
     -e NB_RUNS="9999"
     echo "ran pyrun_tradeexecutor weight_$i $1 $2"
   done

@@ -1,6 +1,2 @@
-30 2 * * 1 ~/Sety-project/devops/buildtools/bin/pyrun_static.sh
-5 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_histfeed.sh
-13-58/15 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_riskpnl.sh ftx debug
-14-59/15 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_riskpnl.sh ftx SysPerp
-10 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_pfoptimizer.sh ftx debug
-10 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_pfoptimizer.sh ftx SysPerp
+30 2 * * 1 pyrun_static.sh
+5 * * * * pyrun_all.sh
