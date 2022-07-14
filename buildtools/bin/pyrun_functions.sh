@@ -47,7 +47,7 @@ pyrun() {
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 
 	if [[ $USERNAME == "ec2-user" ]]; then
-	  docker run -d -e USERNAME=$USERNAME "${@}" \
+	  docker run -e USERNAME=$USERNAME "${@}" \
 	  -v ~/static:/home/ec2-user/static \
 	  -v ~/mktdata:/home/ec2-user/mktdata \
 	  -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault \
@@ -55,7 +55,7 @@ pyrun() {
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	else
-	  docker run -it -e USERNAME=$USERNAME "${@}" \
+	  docker run -e USERNAME=$USERNAME "${@}" \
 	  -v ~/static:/home/ec2-user/static \
 	  -v ~/mktdata:/home/ec2-user/mktdata \
 	  -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault \
@@ -76,7 +76,7 @@ pyrun_static(){
 }
 
 pyrun_histfeed(){
-	pyrun histfeed --rm --name=histfeed_worker_$1 \
+	pyrun histfeed -it --rm --name=histfeed_worker_$1 \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
 	-e UNIVERSE="all" \
@@ -106,7 +106,7 @@ pyrun_pfoptimizer(){
 }
 
 pyrun_riskpnl(){
-	pyrun riskpnl --rm --name=riskpnl_worker_$1_$2 \
+	pyrun riskpnl -d --rm --name=riskpnl_worker_$1_$2 \
 	-e RUN_TYPE="plex" \
   -e EXCHANGE="$1" \
   -e SUBACCOUNT="$2" \
