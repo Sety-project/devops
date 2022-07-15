@@ -43,11 +43,17 @@ lightenup() {
     nb_days=$1
   fi
   before=$(sudo du -hsc / | grep "total" | cut -f1)
-  echo "clear logs for "$nb_days" days"
-  find ./ -type f -mtime +$nb_days -name '*.log' -execdir rm -f -- '{}' \;
-  prune_local
-  after=$(sudo du -hsc / | grep "total" | cut -f1)
-  echo "size down from "$before" to "$after""
+  size=$(cut -d G -f1 <<< $before)
+  echo $size
+  if [[ $size -gt 20 ]]; then
+    echo "clear logs for "$nb_days" days"
+    find ./ -type f -mtime +$nb_days -name '*.log' -execdir rm -f -- '{}' \;
+    prune_local
+    after=$(sudo du -hsc / | grep "total" | cut -f1)
+    echo "size down from "$before" to "$after""
+  else
+    echo "size "$before" is ok. lightenup skipped"
+  fi
 }
 
 mail() {
