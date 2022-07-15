@@ -38,7 +38,7 @@ open_logs() {
 # takes nb days as argument
 lightenup() {
   if [[ $# -lt 1 ]]; then
-    nb_days=1
+    nb_days=7
   else
     nb_days=$1
   fi
