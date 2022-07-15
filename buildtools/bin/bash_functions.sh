@@ -35,8 +35,19 @@ open_logs() {
 	jupyter notebook exec_logs.ipynb
 }
 
-clear_log() {
-  find ./ -type f -mtime +$1 -name '*.log' -execdir rm -f -- '{}' \;
+# takes nb days as argument
+lightenup() {
+  if [[ $# -lt 1 ]]; then
+    nb_days=1
+  else
+    nb_days=$1
+  fi
+  before=$(sudo du -hsc / | grep "total" | cut -f1)
+  echo "clear logs for "$nb_days" days"
+  find ./ -type f -mtime +$nb_days -name '*.log' -execdir rm -f -- '{}' \;
+  prune_local
+  after=$(sudo du -hsc / | grep "total" | cut -f1)
+  echo "size down from "$before" to "$after""
 }
 
 mail() {
@@ -48,5 +59,7 @@ sbr() {
   source ~/.bashrc
 }
 
-# sudo du -hsc * /*
-
+# 'concatfiles xxx .log' would concat all xxx_yyy.log into a xxx_concat.log file
+concatfiles () {
+  find . -type f -name "$1" -exec cat {} + >> output.txt
+}
