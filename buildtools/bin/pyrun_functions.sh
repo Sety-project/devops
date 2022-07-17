@@ -76,9 +76,9 @@ pyrun_static(){
 	cd /tmp/staticdata
 }
 
-# running interactive so it's blocking
+# no need to run interactive since it's blocking in pyrun_all
 pyrun_histfeed(){
-	pyrun histfeed -it --rm --name=histfeed_worker_"$1" \
+	pyrun histfeed -d --rm --name=histfeed_worker_"$1" \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
 	-e UNIVERSE="all" \
@@ -94,7 +94,7 @@ pyrun_pfoptimizer(){
   else
     DIRNAME=~/config/pfoptimizer
   fi
-  find $DIRNAME -name "weightshard_*" -exec rm -f {} \;
+  find $DIRNAME -name "weights_"$1"_"$2"_***.csv" -exec rm -f {} \;
 
 	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_"$1"_"$2" \
 	-e RUN_TYPE="sysperp" \
