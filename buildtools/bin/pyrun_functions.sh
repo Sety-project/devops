@@ -96,6 +96,7 @@ pyrun_pfoptimizer(){
   fi
   find $DIRNAME -name "weights_"$1"_"$2"_***.csv" -exec rm -f {} \;
 
+	#pyrun pfoptimizer -it --rm --name=pfoptimizer_worker_ -e RUN_TYPE="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e TYPE="not_passed" -e DEPTH="not_passed" -e CONFIG="not_passed"
 	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_"$1"_"$2" \
 	-e RUN_TYPE="sysperp" \
   -e EXCHANGE="$1" \
@@ -108,7 +109,8 @@ pyrun_pfoptimizer(){
 }
 
 pyrun_riskpnl(){
-	pyrun riskpnl -d --rm --name=riskpnl_worker_"$1"_"$2" \
+  #pyrun riskpnl -it --rm --name=riskpnl_worker_ -e RUN_TYPE="plex" -e EXCHANGE="ftx" -e SUBACCOUNT="subaccount" -e NB_RUNS="not_passed" -e PERIOD="not_passed" -e DIRNAME="not_passed" -e FILENAME="not_passed" -e CONFIG="not_passed"
+  pyrun riskpnl -d --rm --name=riskpnl_worker_"$1"_"$2" \
 	-e RUN_TYPE="plex" \
   -e EXCHANGE="$1" \
   -e SUBACCOUNT="$2" \
@@ -151,8 +153,7 @@ pyrun_listen(){
 
 pyrun_ux(){
 	# removes those containers with the the IDs of all containers that have exited
-	#docker run -it --restart=on-failure -e DOCKER_IMAGE=helloworld -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
-	#docker run -it --restart=on-failure --entrypoint=bash -v /var/run/docker.sock:/var/run/docker.sock 878533356457.dkr.ecr.eu-west-2.amazonaws.com/ux
+	#pyrun ux -it --restart=on-failure --name=ux_worker
   pyrun ux -d --restart=on-failure --name=ux_worker
 	echo "launched pyrun_ux"
 }
