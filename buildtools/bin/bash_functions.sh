@@ -48,12 +48,17 @@ lightenup() {
   if [[ $size -gt 20 ]]; then
     echo "clear logs for "$nb_days" days"
     find ./ -type f -mtime +$nb_days -name '*.log' -execdir rm -f -- '{}' \;
+    find ./ -type f -mtime +$nb_days -name '*.json' -execdir send_to_s3 -- '{}' \;
     prune_local
     after=$(sudo du -hsc / | grep "total" | cut -f1)
     echo "size down from "$before" to "$after""
   else
     echo "size "$before" is ok. lightenup skipped"
   fi
+}
+
+send_to_s3() {
+  echo "$1"
 }
 
 mail() {
