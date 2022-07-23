@@ -2,15 +2,13 @@
 
 source ~/Sety-project/devops/buildtools/bin/bash_functions.sh
 logs_location="/tmp/morning_log_$(date +%Y_%m_%d_%T).txt"
-sudo systemctl start docker
-pyrun_ux
 
 aws_login (){
 	aws ecr get-login-password --region $ECR_REGION --profile default
 }
 
 docker_login (){
-  #pyrun_listen ftx debug
+  #sudo systemctl start docker
 	aws_login | docker login --username AWS --password-stdin $PYTHON_REGISTRY
 }
 
