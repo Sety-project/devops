@@ -131,7 +131,7 @@ pyrun_tradeexecutor(){
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
     pyrun tradeexecutor -d --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2" -e NB_RUNS="999" -e LISTEN="not_passed"
-    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="weights_ftx_debug_0.csv" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e NB_RUNS="999"
+    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.csv" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e NB_RUNS="999" -e LISTEN="not_passed"
     echo "launched pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
