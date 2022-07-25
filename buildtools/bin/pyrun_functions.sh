@@ -103,7 +103,7 @@ pyrun_pfoptimizer(){
   -e SUBACCOUNT="$2" \
 	-e TYPE="not_passed" \
 	-e DEPTH="not_passed" \
-	-e CONFIG="prod"
+	-e CONFIG="not_passed"
 	echo "launched pyrun_pfoptimizer $1 $2"
 	cd /tmp/pfoptimizer/
 }
@@ -118,7 +118,7 @@ pyrun_riskpnl(){
 	-e PERIOD="not_passed" \
 	-e DIRNAME="not_passed" \
 	-e FILENAME="not_passed" \
-	-e CONFIG="prod"
+	-e CONFIG="not_passed"
 	echo "launched pyrun_riskpnl $1 $2"
 	cd /tmp/riskpnl/
 }
@@ -131,7 +131,7 @@ pyrun_tradeexecutor(){
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
     pyrun tradeexecutor -d --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="$order" -e CONFIG="prod" -e EXCHANGE="$1" -e SUBACCOUNT="$2" -e LISTEN="not_passed"
-    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.csv" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e NB_RUNS="999" -e LISTEN="not_passed"
+    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.csv" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e LISTEN="not_passed"
     echo "launched pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
