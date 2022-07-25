@@ -144,7 +144,7 @@ pyrun_listen(){
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
-    pyrun tradeexecutor -d --restart=on-failure --name="listener_"$order"" -e ORDER="$order" -e CONFIG="prod" -e EXCHANGE="$1" -e SUBACCOUNT="$2" -e LISTEN="True"
+    pyrun tradeexecutor -d --restart=on-failure --name="listener_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2" -e LISTEN="True"
     #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="weights_ftx_debug_0.csv" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e NB_RUNS="999"
     echo "launched pyrun_listen "$order""
   done
