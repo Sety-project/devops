@@ -80,23 +80,6 @@ cache_config(){
 	fi
 }
 
-cache_pnl(){
-	# Function to cache the pnl logs
-	
-	CACHE_LOCATION=/tmp/pnl
-	CONFIG_PATH=/tmp/pnl
-	
-	mkdir -p $CACHE_LOCATION
-
-        rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/
-
-	if [[ $? -eq 0 ]] ; then
-		for entry in "$CACHE_LOCATION"/* ; do
-			echo -e "\nSuccessfully downloaded $entry"                                 
-		done
-	fi
-}
-
 cache_tmp(){
   # go to some existing directory to avoid: https://serverfault.com/questions/591743/rsync-getcwd-no-such-file-or-directory-2
   cd ~
@@ -127,8 +110,11 @@ cache_tmp(){
 	jtt
 }
 
-cache_feed() {
-	echo "TODO"
+cache_all() {
+	cache_static
+	cache_mktdata
+	cache_config
+	cache_tmp
 }
 
 available_feed() {

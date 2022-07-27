@@ -130,24 +130,17 @@ pyrun_tradeexecutor(){
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
-    pyrun tradeexecutor -d --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2" -e LISTEN="not_passed"
-    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.csv" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e LISTEN="not_passed"
+    pyrun tradeexecutor -d --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
+    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.csv" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug"
     echo "launched pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
 }
 
 pyrun_listen(){
-	if [[ $USERNAME == "ec2-user" ]]; then
-    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
-  else
-    DIRNAME="/home/$USERNAME/config/pfoptimizer"
-  fi
-	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
-    pyrun tradeexecutor -d --restart=on-failure --name="listener_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2" -e LISTEN="True"
-    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="weights_ftx_debug_0.csv" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e NB_RUNS="999"
-    echo "launched pyrun_listen "$order""
-  done
+  pyrun tradeexecutor -d --restart=on-failure --name="listen_"$3"" -e ORDER="listen_"$3"" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
+  #pyrun tradeexecutor -it --restart=on-failure --name="listen_"$3"" -e ORDER="listen_"$3"" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug"
+  echo "launched pyrun_listen "$coin""
   cd /tmp/tradeexecutor/
 }
 
