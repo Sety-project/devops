@@ -94,17 +94,19 @@ pyrun_pfoptimizer(){
   else
     DIRNAME=~/config/pfoptimizer
   fi
-  find $DIRNAME -name "weights_"$1"_"$2"_***.csv" -exec rm -f {} \;
+  find $DIRNAME -name "weights_"$2"_"$3"_***.csv" -exec rm -f {} \;
 
 	#pyrun pfoptimizer -it --rm --name=pfoptimizer_worker_ -e RUN_TYPE="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e TYPE="not_passed" -e DEPTH="not_passed" -e CONFIG="not_passed"
-	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_"$1"_"$2" \
-	-e RUN_TYPE="sysperp" \
-  -e EXCHANGE="$1" \
-  -e SUBACCOUNT="$2" \
+	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_"$2"_"$3" \
+	-e RUN_TYPE="$1" \
+  -e EXCHANGE="$2" \
+  -e SUBACCOUNT="$3" \
+	-e CONFIG="not_passed" \
 	-e TYPE="not_passed" \
 	-e DEPTH="not_passed" \
-	-e CONFIG="not_passed"
-	echo "launched pyrun_pfoptimizer $1 $2"
+	-e COIN="not_passed" \
+	-e CASH_SIZE="not_passed"
+	echo "launched pyrun_pfoptimizer $1 $2 $3"
 	cd /tmp/pfoptimizer/
 }
 

@@ -10,7 +10,7 @@ echo "Status code of histfeed_worker: "$histfeed_status""
 
 # Run pfoptimizer only if histfeed returns 0
 if [[ histfeed_status -eq 0 ]]; then
-	pyrun_pfoptimizer $1 $2
+	pyrun_pfoptimizer "sysperp" $1 $2
 fi;
 
 # Run pnlexplain every hour. Removed -e USERNAME=$USERNAME
