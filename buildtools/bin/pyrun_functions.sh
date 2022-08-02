@@ -77,7 +77,7 @@ pyrun_static(){
 
 # no need to run interactive since it's blocking in pyrun_all
 pyrun_histfeed(){
-  #pyrun histfeed -it --rm --name=histfeed_worker_"$1" -e EXCHANGE="$1" -e RUN_TYPE="build" -e UNIVERSE="all" -e NB_DAYS="not_passed"
+  #pyrun histfeed -it --rm --name=histfeed_worker_ -e EXCHANGE="ftx" -e RUN_TYPE="build" -e UNIVERSE="all" -e NB_DAYS="not_passed"
 	pyrun histfeed -d --rm --name=histfeed_worker_"$1" \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
@@ -96,7 +96,7 @@ pyrun_pfoptimizer(){
   fi
   find $DIRNAME -name "weights_"$2"_"$3"_***.csv" -exec rm -f {} \;
 
-	#pyrun pfoptimizer -it --rm --name=pfoptimizer_worker_ -e RUN_TYPE="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e TYPE="not_passed" -e DEPTH="not_passed" -e CONFIG="not_passed"
+	#pyrun pfoptimizer -it --rm --name=pfoptimizer_worker_ -e RUN_TYPE="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e TYPE="not_passed" -e DEPTH="not_passed" -e CONFIG="not_passed" -e COIN="not_passed" -e CASH_SIZE="not_passed"
 	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_"$2"_"$3" \
 	-e RUN_TYPE="$1" \
   -e EXCHANGE="$2" \
@@ -111,7 +111,7 @@ pyrun_pfoptimizer(){
 }
 
 pyrun_riskpnl(){
-  #pyrun riskpnl -it --rm --name=riskpnl_worker_ -e RUN_TYPE="plex" -e EXCHANGE="ftx" -e SUBACCOUNT="subaccount" -e NB_RUNS="not_passed" -e PERIOD="not_passed" -e DIRNAME="not_passed" -e FILENAME="not_passed" -e CONFIG="not_passed"
+  #pyrun riskpnl -it --rm --name=riskpnl_worker_ -e RUN_TYPE="plex" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e NB_RUNS="not_passed" -e PERIOD="not_passed" -e DIRNAME="not_passed" -e FILENAME="not_passed" -e CONFIG="not_passed"
   pyrun riskpnl -d --rm --name=riskpnl_worker_"$1"_"$2" \
 	-e RUN_TYPE="plex" \
   -e EXCHANGE="$1" \
@@ -132,8 +132,8 @@ pyrun_tradeexecutor(){
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
+    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.csv" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug"
     pyrun tradeexecutor -d --restart=on-failure --name="tradeexecutor_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
-    #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.csv" -e CONFIG="prod" -e EXCHANGE="ftx" -e SUBACCOUNT="debug"
     echo "launched pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
