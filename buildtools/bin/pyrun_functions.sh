@@ -101,7 +101,7 @@ pyrun_pfoptimizer(){
 	-e RUN_TYPE="$1" \
   -e EXCHANGE="$2" \
   -e SUBACCOUNT="$3" \
-	-e CONFIG="not_passed" \
+	-e CONFIG="prod" \
 	-e TYPE="not_passed" \
 	-e DEPTH="not_passed" \
 	-e COIN="not_passed" \
