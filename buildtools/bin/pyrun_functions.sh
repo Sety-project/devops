@@ -73,11 +73,11 @@ pyrun() {
 pyrun_static(){
 	pyrun staticdata -d --rm --name=static_worker
 	echo "launched pyrun_static"
-	cd /tmp/staticdata
 }
 
 # no need to run interactive since it's blocking in pyrun_all
 pyrun_histfeed(){
+  #pyrun histfeed -it --rm --name=histfeed_worker_"$1" -e EXCHANGE="$1" -e RUN_TYPE="build" -e UNIVERSE="all" -e NB_DAYS="not_passed"
 	pyrun histfeed -d --rm --name=histfeed_worker_"$1" \
 	-e EXCHANGE="$1" \
 	-e RUN_TYPE="build" \
