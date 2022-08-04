@@ -1,3 +1,4 @@
 30 2 * * 1 ~/Sety-project/devops/buildtools/bin/pyrun_static.sh >> /tmp/cronlog.log
+30 4 * * * ~/Sety-project/devops/buildtools/bin/lightenup.sh >> /tmp/cronlog.log
 5 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_all.sh ftx debug >> /tmp/cronlog.log
-30 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_restart_tradeexecutor.sh ftx debug >> /tmp/cronlog.log
+20 * * * * ~/Sety-project/devops/buildtools/bin/pyrun_restart_tradeexecutor.sh ftx debug >> /tmp/cronlog.log
