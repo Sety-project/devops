@@ -57,6 +57,15 @@ lightenup() {
   fi
 }
 
+clearold() {
+  if [[ $# -lt 1 ]]; then
+    nb_min=60
+  else
+    nb_min=$1
+  fi
+  find ./ -type f -mmin +$nb_min -execdir rm -f -- '{}' \;
+}
+
 send_to_s3() {
   echo "$1"
 }
