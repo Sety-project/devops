@@ -37,6 +37,7 @@ open_logs() {
 
 # takes nb days as argument
 lightenup() {
+  send_to_s3
   if [[ $# -lt 1 ]]; then
     nb_days=7
   else
@@ -48,7 +49,6 @@ lightenup() {
   if [[ $size -gt 20 ]]; then
     echo "clear logs for "$nb_days" days"
     find ./ -type f -mtime +$nb_days -name '*.log' -execdir rm -f -- '{}' \;
-    find ./ -type f -mtime +$nb_days -name '*.json' -execdir send_to_s3 -- '{}' \;
     prune_local
     after=$(sudo du -hsc / | grep "total" | cut -f1)
     echo "size down from "$before" to "$after""
@@ -67,7 +67,8 @@ clearold() {
 }
 
 send_to_s3() {
-  echo "$1"
+  aws s3 cp --recursive /tmp s3://derivativearbitrage/tmp/$(date +%Y-%m-%d-%H-%M-%S)
+  rm -rf /tmp/*
 }
 
 mail() {
