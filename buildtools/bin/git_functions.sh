@@ -5,6 +5,7 @@ source ~/Sety-project/devops/buildtools/bin/variables.sh
 declare -A LINUX_TO_GIT_USER
 LINUX_TO_GIT_USER=(["vic"]="mol86" ["david"]="daviidarr")
 
+
 clone_repository() {
 	# Creates and clones an existing git repo
 	
