@@ -17,7 +17,6 @@ ssh-add ~/.ssh/id_ed25519
 # Add the SSH key to your account on GitHub.
 # https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
 
-
 #make key files read only
 chmod 400 id_ed25519
 
