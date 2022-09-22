@@ -94,7 +94,7 @@ pyrun_pfoptimizer(){
   else
     DIRNAME=~/config/pfoptimizer
   fi
-  find $DIRNAME -name "weights_"$2"_"$3"_***.csv" -exec rm -f {} \;
+  find $DIRNAME -name "weights_"$2"_"$3"_***.json" -exec rm -f {} \;
 
 	#pyrun pfoptimizer -it --rm --name=pfoptimizer_worker_ -e RUN_TYPE="sysperp" -e EXCHANGE="ftx" -e SUBACCOUNT="debug" -e TYPE="not_passed" -e DEPTH="not_passed" -e CONFIG="not_passed" -e COIN="not_passed" -e CASH_SIZE="not_passed"
 	pyrun pfoptimizer -d --rm --name=pfoptimizer_worker_"$2"_"$3" \
