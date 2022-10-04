@@ -68,7 +68,7 @@ clearold() {
 
 send_to_s3() {
   aws s3 cp --recursive /tmp s3://derivativearbitrage/tmp/$(date +%Y-%m-%d-%H-%M-%S)
-  rm -rf /tmp/*
+  #  rm -rf /tmp/*
 }
 
 mail() {
