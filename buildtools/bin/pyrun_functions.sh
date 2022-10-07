@@ -156,6 +156,6 @@ pyrun_ux(){
 pyrun_glp(){
 	# removes those containers with the the IDs of all containers that have exited
 	#pyrun ux -it --restart=on-failure --name=ux_worker
-  pyrun ux -d --restart=on-failure --name=glp_worker
+  pyrun glp -d --restart=on-failure --name=glp_worker
 	echo "launched pyrun_glp"
 }
