@@ -156,6 +156,7 @@ pyrun_ux(){
 pyrun_glp(){
 	# removes those containers with the the IDs of all containers that have exited
 	#pyrun ux -it --restart=on-failure --name=ux_worker
-    pyrun tradeexecutor -d --name="tradeexecutor_glp" -e ORDER="glp.json" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
-    echo "launched pyrun_tradeexecutor "$order""
+	  ORDER = "glp.json"
+    pyrun tradeexecutor -d --name="tradeexecutor_glp" -e ORDER=$ORDER -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
+    echo "launched pyrun_glp "$ORDER""
 }
