@@ -161,8 +161,8 @@ pyrun_glp(){
   else
     DIRNAME="/home/$USERNAME/config/pfoptimizer"
   fi
-  ORDER=$DIRNAME"/"$ORDER
-  pyrun tradeexecutor -it --name="tradeexecutor_glp" -e ORDER="$1" -e CONFIG="not_passed" -e EXCHANGE="$2" -e SUBACCOUNT="$3"
+  ORDER=$DIRNAME"/"$1
+  pyrun tradeexecutor -it --name="tradeexecutor_glp" -e ORDER="$ORDER" -e CONFIG="not_passed" -e EXCHANGE="$2" -e SUBACCOUNT="$3"
   echo "launched pyrun_glp "$ORDER""
   cd /tmp/glp/
 }
