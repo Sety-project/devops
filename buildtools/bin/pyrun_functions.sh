@@ -156,13 +156,7 @@ pyrun_ux(){
 pyrun_glp(){
 	# removes those containers with the the IDs of all containers that have exited
 	#pyrun ux -it --restart=on-failure --name=ux_worker
-	if [[ $USERNAME == "ec2-user" ]]; then
-    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
-  else
-    DIRNAME="/home/$USERNAME/config/pfoptimizer"
-  fi
-  ORDER=$DIRNAME"/"$1
-  pyrun tradeexecutor -it --name="tradeexecutor_glp" -e ORDER="$ORDER" -e CONFIG="not_passed" -e EXCHANGE="$2" -e SUBACCOUNT="$3"
+  pyrun tradeexecutor -it --name="tradeexecutor_glp" -e ORDER="$1" -e CONFIG="not_passed" -e EXCHANGE="$2" -e SUBACCOUNT="$3"
   echo "launched pyrun_glp "$ORDER""
   cd /tmp/glp/
 }
