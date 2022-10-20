@@ -133,7 +133,7 @@ pyrun_tradeexecutor(){
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
     #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.json" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug"
-    pyrun tradeexecutor -d --name="tradeexecutor_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
+    pyrun tradeexecutor -it --name="tradeexecutor_"$order"" -e ORDER="$order" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
     echo "launched pyrun_tradeexecutor "$order""
   done
   cd /tmp/tradeexecutor/
@@ -156,6 +156,6 @@ pyrun_ux(){
 pyrun_glp(){
 	# removes those containers with the the IDs of all containers that have exited
 	#pyrun ux -it --restart=on-failure --name=ux_worker
-  pyrun glp -d --restart=on-failure --name=glp_worker
-	echo "launched pyrun_glp"
+    pyrun tradeexecutor -d --name="tradeexecutor_glp" -e ORDER="glp.json" -e CONFIG="not_passed" -e EXCHANGE="$1" -e SUBACCOUNT="$2"
+    echo "launched pyrun_tradeexecutor "$order""
 }
