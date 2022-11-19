@@ -158,5 +158,4 @@ pyrun_glp(){
 	#pyrun ux -it --restart=on-failure --name=ux_worker
   pyrun tradeexecutor -it --name="tradeexecutor_glp" -e ORDER="$1" -e CONFIG="not_passed" -e EXCHANGE="$2" -e SUBACCOUNT="$3"
   echo "launched pyrun_glp "$ORDER""
-  cd /tmp/glp/
 }
