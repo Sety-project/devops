@@ -88,18 +88,16 @@ concatfiles () {
 download_binance () {
   bla="" #"?prefix="
   url_dir="https://data.binance.vision/${bla}data/futures/um/monthly/klines"
-  dirname="/home/david/mktdata/binance/downloads2"
-  coin_list=("BTCUSDT" "ETHUSDT" "BNBUSDT" "SOLUSDT" "XRPUSDT" "DOGEUSDT" "MATICUSDT" "DOTUSDT" "ADAUSDT")
-  month_list=("2022-11" "2022-10" "2022-09" "2022-08" "2022-07" "2022-06" "2022-05" "2022-04" "2022-03" "2022-02" "2022-01" "2021-12" "2021-11")
+  coin_list=("BTCUSDT" "ETHUSDT" "BNBUSDT" "SOLUSDT" "XRPUSDT" "DOGEUSDT" "MATICUSDT" "DOTUSDT" "ADAUSDT" "CRVUSDT")
+  month_list=("2022-11" "2022-10" "2022-09" "2022-08" "2022-07") # "2022-06" "2022-05" "2022-04" "2022-03" "2022-02" "2022-01" "2021-12" "2021-11")
   frequency="1m"
   for coin in ${coin_list[@]}; do
     for month in ${month_list[@]}; do
       url=${url_dir}"/"${coin}"/"${frequency}"/"${coin}"-${frequency}-"${month}".zip"
-      echo $url
       wget $url
     done
     unzip \*.zip
     rm ***.zip -f
-    cat ${coin}***.csv > ${coin}".csv"
+    #cat ${coin}***.csv > ${coin}".csv"
   done
 }
