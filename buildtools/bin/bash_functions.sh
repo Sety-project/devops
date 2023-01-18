@@ -88,38 +88,28 @@ concatfiles () {
 download_binance () {
   curdir=$(pwd)
   cd "/home/david/mktdata/binance/downloads"
-  # spot or futures
-  if (($#>0))
-  then
-    type=@1
-  else
-    type="futures"
-  fi
-  type="spot"
-  url="https://data.binance.vision/data/"${type}"/um/"
+  type="futures"
+  baseurl="https://data.binance.vision/data/"${type}"/um/"
   coin_list=("BTCUSDT" "ETHUSDT" "BNBUSDT" "AAVEUSDT" "XRPUSDT" "DOGEUSDT" "MATICUSDT" "DOTUSDT" "ADAUSDT" "CRVUSDT" "AVAXUSDT")
   month_list=("2022-11" "2022-10" "2022-09" "2022-08" "2022-07") # "2022-06" "2022-05" "2022-04" "2022-03" "2022-02" "2022-01" "2021-12" "2021-11")
   frequency="1m"
   for coin in ${coin_list[@]}; do
     for month in ${month_list[@]}; do
       dates=${coin}"-${frequency}-"${month}
-      url=${url}"monthly/klines/"${coin}"/"${frequency}"/"${dates}".zip"
+      url=${baseurl}"monthly/klines/"${coin}"/"${frequency}"/"${dates}".zip"
       wget $url
       unzip ${dates}".zip" && rm ${dates}".zip"
       mv ${dates}".csv" ${dates}"-"${type}"-klines.csv"
 
-      if ($type="futures")
-      then
-        url=${url}"monthly/premiumIndexKlines/"${coin}"/"${frequency}"/"${dates}".zip"
-        wget $url
-        unzip ${dates}".zip" && rm ${dates}".zip"
-        mv ${dates}".csv" ${dates}"-"${type}"-premium.csv"
+      url=${baseurl}"monthly/premiumIndexKlines/"${coin}"/"${frequency}"/"${dates}".zip"
+      wget $url
+      unzip ${dates}".zip" && rm ${dates}".zip"
+      mv ${dates}".csv" ${dates}"-"${type}"-premium.csv"
 
-        #url=${url}"daily/metrics/"${coin}"/"${dates}".zip"
-        #wget $url
-        #unzip ${dates}".zip" && rm ${dates}".zip"
-        #mv ${dates}".csv" ${dates}"-premium.csv"
-      fi
+      url=${baseurl}"monthly/markPriceKlines/"${coin}"/"${frequency}"/"${dates}".zip"
+      wget $url
+      unzip ${dates}".zip" && rm ${dates}".zip"
+      mv ${dates}".csv" ${dates}"-"${type}"-mark.csv"
 
     done
   done
@@ -127,7 +117,7 @@ download_binance () {
 }
 
 node_red () {
-  cd /home/david/StakeCap/bot-systems-flows-main
+  cd /home/david/StakeCap/node-red/bot-systems-flows-main
   docker-compose up -d kafka neptune redis neptune-ui
   docker-compose up -d kafka-ui
   docker-compose up -d node-red-block-watchers
