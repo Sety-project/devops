@@ -21,7 +21,7 @@ jpl() {
 }
 
 jtt() {
-  if [[ $USERNAME == "ec2-user" ]]; then
+  if [[ $USERNAME == "ubuntu" ]]; then
     cd /tmp/tradeexecutor
   else
     cd /tmp/prod/tradeexecutor

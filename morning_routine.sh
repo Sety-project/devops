@@ -37,5 +37,5 @@ prune_local(){
 }
 
 prodbox(){
-	ssh -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS -p 22
+	ssh -i ~/.cache/setykeys/ec2-two.pem ubuntu@$ELASTIC_IPV4DNS -p 22
 }

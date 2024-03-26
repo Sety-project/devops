@@ -47,20 +47,20 @@ pyrun() {
 	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 
   # they're in fact both running without detach falg...
-	if [[ $USERNAME == "ec2-user" ]]; then
+	if [[ $USERNAME == "ubuntu" ]]; then
 	  docker run -e USERNAME=$USERNAME "${@}" \
-	  -v ~/static:/home/ec2-user/static \
-	  -v ~/mktdata:/home/ec2-user/mktdata \
-	  -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault \
-	  -v ~/config/prod:/home/ec2-user/config \
+	  -v ~/static:/home/ubuntu/static \
+	  -v ~/mktdata:/home/ubuntu/mktdata \
+	  -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
+	  -v ~/config/prod:/home/ubuntu/config \
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	else
 	  docker run -e USERNAME=$USERNAME "${@}" \
-	  -v ~/static:/home/ec2-user/static \
-	  -v ~/mktdata:/home/ec2-user/mktdata \
-	  -v ~/.cache/setyvault:/home/ec2-user/.cache/setyvault \
-	  -v ~/config/prod:/home/ec2-user/config \
+	  -v ~/static:/home/ubuntu/static \
+	  -v ~/mktdata:/home/ubuntu/mktdata \
+	  -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
+	  -v ~/config/prod:/home/ubuntu/config \
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi
@@ -89,7 +89,7 @@ pyrun_histfeed(){
 
 pyrun_pfoptimizer(){
   echo "removing old shards"
-  if [[ $USERNAME == "ec2-user" ]]; then
+  if [[ $USERNAME == "ubuntu" ]]; then
     DIRNAME=~/config/prod/pfoptimizer
   else
     DIRNAME=~/config/pfoptimizer
@@ -126,7 +126,7 @@ pyrun_riskpnl(){
 }
 
 pyrun_tradeexecutor(){
-	if [[ $USERNAME == "ec2-user" ]]; then
+	if [[ $USERNAME == "ubuntu" ]]; then
     DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
   else
     DIRNAME="/home/$USERNAME/config/pfoptimizer"

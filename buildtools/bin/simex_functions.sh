@@ -12,7 +12,7 @@ cache_static() {
 
 	CACHE_LOCATION=/home/$USERNAME/.cache/staticdata
 	REMOTE_LOCATION=/home/$USERNAME/static/staticdata
-	STATIC_PATH=/home/ec2-user/static/staticdata                                                        
+	STATIC_PATH=/home/ubuntu/static/staticdata
 	STATIC_FILE=static_$DATE.json
 
 	mkdir -p $CACHE_LOCATION                                                             
@@ -21,8 +21,8 @@ cache_static() {
 		echo -e "$STATIC_FILE found\nReplacing old file..."                                                                     
 	fi                                 
 	
-	#COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/`
-	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/
+	#COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-two.pem ubuntu@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/`
+	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-two.pem" ubuntu@$ELASTIC_IPV4DNS:$STATIC_PATH/$STATIC_FILE $CACHE_LOCATION/
 	
 	if [[ $? -eq 0 ]] ; then                                                             
 		echo -e "\nSuccessfully downloaded $STATIC_FILE."                                 
@@ -31,12 +31,12 @@ cache_static() {
 
 cache_vault(){
 	CACHE_LOCATION=/home/$USERNAME/.cache/setyvault
-	VAULT_PATH=/home/ec2-user/.cache/setyvault
+	VAULT_PATH=/home/ubuntu/.cache/setyvault
 	
 	mkdir -p $CACHE_LOCATION
 
-	#COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/`
-	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/
+	#COMMAND_OUTPUT=`scp -i ~/.cache/setykeys/ec2-two.pem ubuntu@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/`
+	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-two.pem" ubuntu@$ELASTIC_IPV4DNS:$VAULT_PATH/* $CACHE_LOCATION/
 	
 	if [[ $? -eq 0 ]] ; then             
 		for entry in "$CACHE_LOCATION"/* ; do                                                
@@ -47,12 +47,12 @@ cache_vault(){
 
 cache_mktdata(){
 	CACHE_LOCATION=/home/$USERNAME/mktdata
-	MKTDATA_PATH=/home/ec2-user/mktdata
+	MKTDATA_PATH=/home/ubuntu/mktdata
 	
 	mkdir -p $CACHE_LOCATION
 	
 	# use 4 IPv4, z compression, a send only differences, h human readable, v verbose
-	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/
+	rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-two.pem" ubuntu@$ELASTIC_IPV4DNS:$MKTDATA_PATH/* $CACHE_LOCATION/
 
 	if [[ $? -eq 0 ]] ; then             
 		for entry in "$CACHE_LOCATION"/* ; do
@@ -65,13 +65,13 @@ cache_config(){
 	# Only caches ~/config/prod
 	
 	CACHE_LOCATION=/home/$USERNAME/config/prod
-	CONFIG_PATH=/home/ec2-user/config/prod
+	CONFIG_PATH=/home/ubuntu/config/prod
 	
 	#rm -rf $CACHE_LOCATION
 	mkdir -p $CACHE_LOCATION
 
-	#COMMAND_OUTPUT=`scp -rp -i ~/.cache/setykeys/ec2-one.pem ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/`
-        rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/
+	#COMMAND_OUTPUT=`scp -rp -i ~/.cache/setykeys/ec2-two.pem ubuntu@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/`
+        rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-two.pem" ubuntu@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/
 
 	if [[ $? -eq 0 ]] ; then
 		for entry in "$CACHE_LOCATION"/* ; do
@@ -98,7 +98,7 @@ cache_tmp(){
 		rm -rf $CACHE_LOCATION
 		mkdir -p $CACHE_LOCATION
 
-		rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-one.pem" ec2-user@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/
+		rsync -avh4z --progress -e  "ssh -i ~/.cache/setykeys/ec2-two.pem" ubuntu@$ELASTIC_IPV4DNS:$CONFIG_PATH/* $CACHE_LOCATION/
 
 		if [[ $? -eq 0 ]] ; then
 			for entry in "$CACHE_LOCATION"/* ; do
@@ -124,4 +124,7 @@ available_feed() {
 run_simulation() {
 	echo "TODO"
 }
-
+sync_ec2() {
+    scp -i ~/.cache/setykeys/ec2-two.pem -r ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/deribitvolarb/logs /home/user/deribitvolarb
+    scp -i ~/.cache/setykeys/ec2-two.pem ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/actualyield/data/plex.db /home/user/ActualYield/remote_plex.db
+}

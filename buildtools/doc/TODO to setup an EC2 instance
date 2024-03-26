@@ -28,8 +28,8 @@ mkdir -p ~/.cache/setyvault
 sudo yum update -y
 sudo yum install docker -y
 sudo service docker start
-#Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
-sudo usermod -a -G docker ec2-user
+#Add the ubuntu to the docker group so you can execute Docker commands without using sudo.
+sudo usermod -a -G docker ubuntu
 
 # Install silver searcher
 j devops
@@ -62,7 +62,6 @@ echo "source ~/Sety-project/devops/morning_routine.sh"  >> ~/.bashrc
 source ~/.bashrc
 clone_repository pylibs
 clone_repository config
-clone_repository research
 
 # Create crontab scripts for pyrun
 crontab -e 
