@@ -126,5 +126,7 @@ run_simulation() {
 }
 sync_ec2() {
     scp -i ~/.cache/setykeys/ec2-two.pem -r ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/deribitvolarb/logs /home/user/deribitvolarb
-    scp -i ~/.cache/setykeys/ec2-two.pem ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/actualyield/data/plex.db /home/user/ActualYield/remote_plex.db
+    scp -i ~/.cache/setykeys/ec2-two.pem -r ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/actualyield/data /home/user/actualyield/remote_data
+    mv /home/user/actualyield/remote_data/data/* /home/user/actualyield/remote_data
+    rm -rf /home/user/actualyield/remote_data/data
 }

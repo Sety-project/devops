@@ -20,6 +20,10 @@ jpl() {
     cd ~/Sety-project/pylibs/$1
 }
 
+jay() {
+    cd ~/actualyield
+}
+
 jtt() {
   if [[ $USERNAME == "ubuntu" ]]; then
     cd /tmp/tradeexecutor
