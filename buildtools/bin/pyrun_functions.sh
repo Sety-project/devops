@@ -49,18 +49,18 @@ pyrun() {
   # they're in fact both running without detach falg...
 	if [[ $USERNAME == "ubuntu" ]]; then
 	  docker run -e USERNAME=$USERNAME "${@}" \
-	  -v ~/static:/home/ubuntu/static \
-	  -v ~/mktdata:/home/ubuntu/mktdata \
+	  -v ~/static:/home/ubuntu/Sety-project/static \
+	  -v ~/mktdata:/home/ubuntu/Sety-project/mktdata \
 	  -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
-	  -v ~/config/prod:/home/ubuntu/config \
+	  -v ~/config/prod:/home/ubuntu/Sety-project/config \
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	else
 	  docker run -e USERNAME=$USERNAME "${@}" \
-	  -v ~/static:/home/ubuntu/static \
-	  -v ~/mktdata:/home/ubuntu/mktdata \
-	  -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
-	  -v ~/config/prod:/home/ubuntu/config \
+	  -v ~/static:/home/ubuntu/Sety-project/static \
+	  -v ~/mktdata:/home/ubuntu/Sety-project/mktdata \
+	  -v ~/.cache/setyvault:/home/ubuntu/Sety-project/.cache/setyvault \
+	  -v ~/config/prod:/home/ubuntu/Sety-project/config \
 	  -v /tmp:/tmp \
 	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 	fi

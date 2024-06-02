@@ -12,7 +12,7 @@ cache_static() {
 
 	CACHE_LOCATION=/home/$USERNAME/.cache/staticdata
 	REMOTE_LOCATION=/home/$USERNAME/static/staticdata
-	STATIC_PATH=/home/ubuntu/static/staticdata
+	STATIC_PATH=/home/ubuntu/Sety-project/static/staticdata
 	STATIC_FILE=static_$DATE.json
 
 	mkdir -p $CACHE_LOCATION                                                             
@@ -31,7 +31,7 @@ cache_static() {
 
 cache_vault(){
 	CACHE_LOCATION=/home/$USERNAME/.cache/setyvault
-	VAULT_PATH=/home/ubuntu/.cache/setyvault
+	VAULT_PATH=/home/ubuntu/Sety-project/.cache/setyvault
 	
 	mkdir -p $CACHE_LOCATION
 
@@ -47,7 +47,7 @@ cache_vault(){
 
 cache_mktdata(){
 	CACHE_LOCATION=/home/$USERNAME/mktdata
-	MKTDATA_PATH=/home/ubuntu/mktdata
+	MKTDATA_PATH=/home/ubuntu/Sety-project/mktdata
 	
 	mkdir -p $CACHE_LOCATION
 	
@@ -65,7 +65,7 @@ cache_config(){
 	# Only caches ~/config/prod
 	
 	CACHE_LOCATION=/home/$USERNAME/config/prod
-	CONFIG_PATH=/home/ubuntu/config/prod
+	CONFIG_PATH=/home/ubuntu/Sety-project/config/prod
 	
 	#rm -rf $CACHE_LOCATION
 	mkdir -p $CACHE_LOCATION
@@ -126,7 +126,6 @@ run_simulation() {
 }
 sync_ec2() {
     scp -i ~/.cache/setykeys/ec2-two.pem -r ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/deribitvolarb/logs /home/user/deribitvolarb
-    scp -i ~/.cache/setykeys/ec2-two.pem -r ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/actualyield/data /home/user/actualyield/remote_data
-    mv /home/user/actualyield/remote_data/data/* /home/user/actualyield/remote_data
-    rm -rf /home/user/actualyield/remote_data/data
+#    scp -i ~/.cache/setykeys/ec2-two.pem -r ubuntu@ec2-13-42-75-179.eu-west-2.compute.amazonaws.com:/home/ubuntu/actualyield /home/user/actualyield/remote_data
+    aws s3 cp s3://actualyield /home/user/actualyield/remote_data --recursive
 }

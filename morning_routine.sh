@@ -39,3 +39,11 @@ prune_local(){
 prodbox(){
 	ssh -i ~/.cache/setykeys/ec2-two.pem ubuntu@$ELASTIC_IPV4DNS -p 22
 }
+
+D(){
+    date -d @$(xclip -o)
+}
+
+sety(){
+    echo "0xFaf2A8b5fa78cA2786cEf5F7e19f6942EC7cB531"
+}
