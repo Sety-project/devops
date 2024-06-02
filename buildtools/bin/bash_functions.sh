@@ -9,15 +9,11 @@ j() {
 	REPOS=(config mktdata .cache .ssh .aws)
 	
 	if [[ " ${REPOS[*]} " =~ " $1 " ]]; then
-		cd ~/$1
+		cd ~/Sety-project/$1
 		return
 	fi
 
 	cd ~/Sety-project/$1
-}
-
-jpl() {
-    cd ~/Sety-project/pylibs/$1
 }
 
 jay() {
