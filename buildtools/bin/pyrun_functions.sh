@@ -71,9 +71,7 @@ pyrun_actualyield() {
     gpa
 
     docker_login
-
     IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`
-
     if [[ $IS_DOCKER_RUNNING -eq 0 ]] ; then
     sudo /bin/systemctl start docker.service
     fi
@@ -82,7 +80,7 @@ pyrun_actualyield() {
     docker pull $PYTHON_REGISTRY/actualyield:latest
 
     # they're in fact both running without detach falg...
-    docker run -e USERNAME=$USERNAME actualyield -d --restart=on-failure --name=actualyield
+    docker run -e USERNAME=$USERNAME -d --restart=on-failure --name=actualyield
     -v ~/actualyield:/home/ubuntu/actualyield \
     -v ~/actualyield/data:/home/ubuntu/actualyield/data \
     -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
