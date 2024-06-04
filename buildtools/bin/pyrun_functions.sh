@@ -11,6 +11,62 @@ pystop(){
 }
 
 pyrun() {
+  # because the run.sh demands them, all params must be passed incl optionals. "not_passed" will apply default from python script
+  gpa
+
+	docker_login
+	REPO_LIST=$(aws ecr describe-repositories --region $ECR_REGION --query "repositories[].repositoryName" --output text)
+	FOUND=0
+	if [[ $# -ne 0 ]] ; then
+		# Tries to identify the project name
+		for repo in $REPO_LIST; do
+			if [ $repo == $1 ]; then
+				FOUND=1
+				PYTHON_PROJECT=$1
+				shift
+			fi
+		done
+	fi
+	if [[ $FOUND -eq 0 ]] ; then
+		# Project not found, assigning
+		PYTHON_PROJECT=`pwd | sed 's#.*/##'`
+		# If project not in repo list, terminating
+		echo $REPO_LIST | grep -w -q $PYTHON_PROJECT
+		if [[ $? == 1 ]]; then
+			return
+		fi
+	fi
+
+	IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`
+
+	if [[ $IS_DOCKER_RUNNING -eq 0 ]] ; then
+		sudo /bin/systemctl start docker.service
+	fi
+
+	docker rm $(docker ps --filter status=exited -q)
+	docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+
+  # they're in fact both running without detach falg...
+	if [[ $USERNAME == "ubuntu" ]]; then
+	  docker run -e USERNAME=$USERNAME "${@}" \
+	  -v ~/Sety-project/static:/home/ubuntu/Sety-project/static \
+	  -v ~/Sety-project/mktdata:/home/ubuntu/Sety-project/mktdata \
+	  -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
+	  -v ~/Sety-project/config/prod:/home/ubuntu/Sety-project/config \
+	  -v /tmp:/tmp \
+	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+	else
+	  docker run -e USERNAME=$USERNAME "${@}" \
+	  -v ~/Sety-project/static:/home/ubuntu/Sety-project/static \
+	  -v ~/Sety-project/mktdata:/home/ubuntu/Sety-project/mktdata \
+	  -v ~/.cache/setyvault:/home/ubuntu/Sety-project/.cache/setyvault \
+	  -v ~/Sety-project/config/prod:/home/ubuntu/Sety-project/config \
+	  -v /tmp:/tmp \
+	  --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+	fi
+}
+
+pyrun_actualyield() {
     # because the run.sh demands them, all params must be passed incl optionals. "not_passed" will apply default from python script
     gpa
 
@@ -47,7 +103,7 @@ pyrun() {
     docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
 
     # they're in fact both running without detach falg...
-    docker run -e USERNAME=$USERNAME "${@}" \
+    docker run -e USERNAME=$USERNAME -d --restart=on-failure --name=actualyield
     -v ~/actualyield:/home/ubuntu/actualyield \
     -v ~/actualyield/data:/home/ubuntu/actualyield/data \
     -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
