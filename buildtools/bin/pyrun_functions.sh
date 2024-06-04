@@ -81,7 +81,7 @@ pyrun_actualyield() {
 
     # they're in fact both running without detach falg...
     docker run -e USERNAME=$USERNAME actualyield \
-    -it --rm --name=actualyield_worker /
+    -it --rm --name=actualyield_worker \
     -v ~/actualyield:/home/ubuntu/actualyield \
     -v ~/actualyield/data:/home/ubuntu/actualyield/data \
     -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
