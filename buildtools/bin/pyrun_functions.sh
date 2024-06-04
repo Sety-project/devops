@@ -71,27 +71,6 @@ pyrun_actualyield() {
     gpa
 
     docker_login
-    REPO_LIST=$(aws ecr describe-repositories --region $ECR_REGION --query "repositories[].repositoryName" --output text)
-    FOUND=0
-    if [[ $# -ne 0 ]] ; then
-    # Tries to identify the project name
-    for repo in $REPO_LIST; do
-        if [ $repo == $1 ]; then
-            FOUND=1
-            PYTHON_PROJECT=$1
-            shift
-        fi
-    done
-    fi
-    if [[ $FOUND -eq 0 ]] ; then
-    # Project not found, assigning
-    PYTHON_PROJECT=`pwd | sed 's#.*/##'`
-    # If project not in repo list, terminating
-    echo $REPO_LIST | grep -w -q $PYTHON_PROJECT
-    if [[ $? == 1 ]]; then
-        return
-    fi
-    fi
 
     IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`
 
@@ -100,7 +79,7 @@ pyrun_actualyield() {
     fi
 
     docker rm $(docker ps --filter status=exited -q)
-    docker pull $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+    docker pull $PYTHON_REGISTRY/actualyield:latest
 
     # they're in fact both running without detach falg...
     docker run -e USERNAME=$USERNAME -d --restart=on-failure --name=actualyield
@@ -109,7 +88,7 @@ pyrun_actualyield() {
     -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
     -v ~/Sety-project/actualyield/.streamlit:/home/ubuntu/actualyield/.streamlit \
     -v /tmp:/tmp \
-    --network host $PYTHON_REGISTRY/$PYTHON_PROJECT:latest
+    --network host $PYTHON_REGISTRY/actualyield:latest
 }
 
 #################################
