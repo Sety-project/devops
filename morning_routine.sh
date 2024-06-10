@@ -20,6 +20,7 @@ docker_pull (){
 }
 
 prune_ecr(){
+    docker system prune -a
   # this is to prune ECR but there is a lifecyle policy in place so not useful generally
 	for repo in $REPO_LIST; do
 		#echo "list untagged images for $repo"

@@ -80,8 +80,9 @@ pyrun_actualyield() {
     docker pull $PYTHON_REGISTRY/actualyield:latest
 
     # they're in fact both running without detach falg...
-    docker run -e USERNAME=$USERNAME actualyield \
+    docker run actualyield \
     -it --rm --name=actualyield_worker \
+    -e USERNAME=$USERNAME \
     -v ~/actualyield:/home/ubuntu/actualyield \
     -v ~/actualyield/data:/home/ubuntu/actualyield/data \
     -v ~/.cache/setyvault:/home/ubuntu/.cache/setyvault \
@@ -114,9 +115,9 @@ pyrun_histfeed(){
 pyrun_pfoptimizer(){
   echo "removing old shards"
   if [[ $USERNAME == "ubuntu" ]]; then
-    DIRNAME=~/config/prod/pfoptimizer
+    DIRNAME=~/Sety-project/config/prod/pfoptimizer
   else
-    DIRNAME=~/config/pfoptimizer
+    DIRNAME=~/Sety-project/config/pfoptimizer
   fi
   find $DIRNAME -name "weights_"$2"_"$3"***.json" -exec rm -f {} \;
 
@@ -151,9 +152,9 @@ pyrun_riskpnl(){
 
 pyrun_tradeexecutor(){
 	if [[ $USERNAME == "ubuntu" ]]; then
-    DIRNAME="/home/$USERNAME/config/prod/pfoptimizer"
+    DIRNAME="/home/$USERNAME/Sety-project/config/prod/pfoptimizer"
   else
-    DIRNAME="/home/$USERNAME/config/pfoptimizer"
+    DIRNAME="/home/$USERNAME/Sety-project/config/pfoptimizer"
   fi
 	for order in $( ls $DIRNAME | grep weights_"$1"_"$2"_ ); do
     #pyrun tradeexecutor -it --restart=on-failure --name="tradeexecutor_" -e ORDER="weights_ftx_debug_ETH.json" -e CONFIG="not_passed" -e EXCHANGE="ftx" -e SUBACCOUNT="debug"
