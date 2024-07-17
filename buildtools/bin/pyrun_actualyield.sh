@@ -1,3 +1,3 @@
 #!/bin/bash
-source ~/.bashrc
+source home/ubuntu/.bashrc
 pyrun_actualyield "$@"
