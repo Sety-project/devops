@@ -1,4 +1,3 @@
 #!/bin/bash
 source ~/.bashrc
-
-pyrun_static
+pyrun_static "$@"

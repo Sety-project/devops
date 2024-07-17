@@ -1,4 +1,3 @@
 #!/bin/bash
 source ~/.bashrc
-
-pyrun_riskpnl
+pyrun_riskpnl "$@"

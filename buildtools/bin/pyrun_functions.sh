@@ -68,7 +68,7 @@ pyrun() {
 
 pyrun_actualyield() {
     # because the run.sh demands them, all params must be passed incl optionals. "not_passed" will apply default from python script
-    gpa
+    # gpa
 
     docker_login
     IS_DOCKER_RUNNING=`systemctl status docker | grep Active | grep running | wc -l`

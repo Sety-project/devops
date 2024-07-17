@@ -1,4 +1,3 @@
 #!/bin/bash
 source ~/.bashrc
-
-pyrun_histfeed
+pyrun_histfeed "$@"
